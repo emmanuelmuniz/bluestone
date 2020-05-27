@@ -53,7 +53,7 @@
                 <div class="col-12 col-md-6">
                     <div class="textos">
                         <h1>Conectá con los profesioanles que necesitás</h1>
-                        <a href="registro.php">Empeza ahora!</a>
+                        <a href="registro.php">Empezá ahora!</a>
                     </div>
                 </div>
             </div>

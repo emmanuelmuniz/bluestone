@@ -29,6 +29,7 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit']
         //     $_SESSION['idUser'] = $row['idUsuario'];
         //     echo"Hola";
         //     Header("Location: panel.php");  
+        //     $_SESSION['message'] = "Email correcto y contraseña correcta";
         // }
 
         if($password == $row['password']){

@@ -3,6 +3,20 @@ session_start();
 
 if(isset($_SESSION['message']))
     unset($_SESSION['message']);
+
+include 'conexion.php';
+
+$query = "SELECT * FROM publicacion";
+$publicaciones = mysqli_query($conn, $query);
+
+$cantPublicaciones = mysqli_num_rows($publicaciones);
+$publicacionesPorPagina = 1;
+
+$paginas = $cantPublicaciones/1;
+$paginas = ceil($paginas);
+
+$paginaActual = $_GET['page'];
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +33,8 @@ if(isset($_SESSION['message']))
     <title>BlueStone</title>
 </head>
 <body>
-<header>
+    <!-- Menú -->
+    <header>
         <div class="container-fluid">
             <div class="row menu" >
                 <div class="logo col-12 col-md-4">
@@ -54,6 +69,54 @@ if(isset($_SESSION['message']))
             </div>
         </div>
     </header>
+
+    <!-- Publicaciones -->
+    <section class="publicaciones">
+        <h1>Publicaciones</h1>
+        
+        <?php       
+            if(!$_GET){
+                header("Location: panel.php?page=0");
+            }
+
+            if (mysqli_num_rows($publicaciones) > 0){
+
+                $desde = $paginaActual*$publicacionesPorPagina;
+                $desde = (string)$desde;
+
+                $publicacionesPorPagina = (string)$publicacionesPorPagina;
+
+                $publiPaginaActual = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 50) AS descripcion, categoria FROM publicacion LIMIT $desde, $publicacionesPorPagina";
+
+                $result = mysqli_query($conn, $publiPaginaActual);
+
+                while($publicacion = mysqli_fetch_assoc($result)): ?>
+                    <a href="publicacion.php">
+                        <div style="cursor: pointer;" onclick="publicacion.php">
+                            <?php echo $publicacion['titulo']. "<br>"; ?>
+                            <?php echo $publicacion['descripcion']. "...<br>"; ?>
+                            <?php echo $publicacion['categoria']. "<br>"; ?>
+                        </div>
+                    </a>
+                    <hr>
+                <?php endwhile; ?>
+
+                <nav aria-label='Page navigation example'>
+                    <ul class="pagination">
+                        <li class="page-item <?php echo $paginaActual==0 ? ' disabled' : '' ?>"><a class="page-link" href="panel.php?page= <?php echo ($paginaActual-1)?>">Anterior</a></li>
+
+                        <?php for($i=0; $i<$paginas; $i++): ?>
+                        <li class="page-item 
+                        <?php echo $i == $paginaActual ? ' active' : ''?>">
+                            <a class="page-link" href="panel.php?page=<?php echo $i ?>"><?php echo ($i+1)?></a>
+                        </li>
+                        <?php endfor; ?>
+                
+                        <li class="page-item <?php echo $paginaActual==$paginas-1 ? ' disabled' : '' ?>"><a class="page-link" href="panel.php?page= <?php echo ($paginaActual+1)?>">Siguiente</a></li>
+                    </ul>
+                </nav>
+            <?php } ?>
+    </section>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

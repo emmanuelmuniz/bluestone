@@ -73,5 +73,6 @@ body {
 .alert p{
     padding: 0px;
     margin: 0px;
-    width: 100%
+    width: 100%;
+    text-align: left;
 }

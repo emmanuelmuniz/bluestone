@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php session_start(); 
+
+if(isset($_SESSION['message']) || isset($_SESSION['messageSignup']))
+    unset($_SESSION['message'], $_SESSION['messageSignup']);
+?>
 
 <!DOCTYPE html>
 <html lang="en">

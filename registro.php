@@ -3,7 +3,11 @@ session_start();
 
 if(isset($_SESSION['idUser']))
     header("Location: panel.php");
+
+if(isset($_SESSION['message']))
+    unset($_SESSION['message']);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +24,7 @@ if(isset($_SESSION['idUser']))
     <!--Css-->
     <link rel="stylesheet" href="css/register-login.css?v=<?php echo time(); ?>" title="registercss">
     <link rel="stylesheet" href="css/main.css?v=<?php echo time(); ?>">
-    <title>BlueStone - Registro</title>
+    <title>Document</title>
 </head>
 <body>
     <header>
@@ -43,50 +47,64 @@ if(isset($_SESSION['idUser']))
     </header>
 
     <div class="container">
-        <form class="form-horizontal mx-auto" role="form">
+        <form action="http://localhost/bluestone/validacion.php" class="form-horizontal mx-auto" role="form" method="POST" enctype="multipart/form-data">   
             <div class="titulo col-sm-12">
                 <h2>Registrate</h2>
             </div>
+            <?php if(isset($_SESSION['messageSignup'])){ 
+                if(is_array($_SESSION['messageSignup'])){ ?>
+                    <div class="bg-danger text-white alert">
+                    <p><?php foreach($_SESSION['messageSignup'] as $mensaje)
+                        echo "* ".$mensaje."<br>";          
+                        ?>
+                    </p>
+                </div>
+                <?php } else{ ?>
+                    <div class="bg-danger text-white alert">
+                    <p><?php echo "* ".$_SESSION['messageSignup'];?></p>
+                    </div>
+                <?php }
+                } ?>
             <div class="form-group">
-                <label for="firstName" class="control-label col-sm-12">Nombre</label>
+                <label for="firstName1" class="control-label col-sm-12">Nombre</label>
                 <div class="col-sm-12">
-                    <input type="text" id="firstName" placeholder="Ingrese el Nombre Completo" class="form-control" autofocus required>
+                    <input type="text" name="firstName" placeholder="Ingrese el Nombre Completo" class="form-control" value="" autofocus required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="firstName" class="col-sm-12 control-label">Apellido</label>
+                <label for="lastName1" class="col-sm-12 control-label">Apellido</label>
                 <div class="col-sm-12">
-                    <input type="text" id="firstName" placeholder="Ingrese el Nombre Completo" class="form-control" autofocus required>
+                    <input type="text" name="lastName" placeholder="Ingrese el Nombre Completo" class="form-control" value="" autofocus required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="email" class="col-sm-12 control-label">Email</label>
+                <label for="email1" class="col-sm-12 control-label">Email</label>
                 <div class="col-sm-12">
-                    <input type="email" id="email" placeholder="Ingrese el Email" class="form-control" required>
+                    <input type="email" name="email" placeholder="Ingrese el Email" class="form-control" value="" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="password" class="col-sm-12 control-label">Contraseña</label>
+                <label for="password1" class="col-sm-12 control-label">Contraseña</label>
                 <div class="col-sm-12">
-                    <input type="password" id="password" placeholder="Ingrese la Contraseña" class="form-control" required>
+                    <input type="password" name="password" placeholder="Ingrese la Contraseña" class="form-control" value="" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="confirmPassword" class="col-sm-12  control-label">Confirma La Contraseña</label>
+                <label for="confirmPassword1" class="col-sm-12  control-label">Confirma La Contraseña</label>
                 <div class="col-sm-12">
-                    <input type="text" id="confirmPassword" placeholder="Vuelva a ingresar la Contraseña" class="form-control" autofocus required>
+                    <input type="text" name="confirmPassword" placeholder="Vuelva a ingresar la Contraseña" class="form-control" value="" autofocus required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="birthDate" class="col-sm-12 control-label">Fecha de Nacimiento</label>
+                <label for="birthDate1" class="col-sm-12 control-label">Fecha de Nacimiento</label>
                 <div class="col-sm-12">
-                    <input type="date" id="birthDate" class="form-control" required>
+                    <input type="date" name="birthDate" class="form-control" value="" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="phone" class="col-sm-12 control-label">Numero de Telefono</label>
+                <label for="phone1" class="col-sm-12 control-label">Numero de Telefono</label>
                 <div class="col-sm-12">
-                    <input type="number" id="phone" placeholder="Ingrese el Numero de Telefono" class="form-control" autofocus required>
+                    <input type="phone" name="phone" placeholder="Ingrese el Numero de Telefono" class="form-control" value="" autofocus required>
                 </div>
             </div>
             <div class="form-group">
@@ -95,17 +113,17 @@ if(isset($_SESSION['idUser']))
                     <div class="row genero">
                         <div class="col-sm-3">
                             <label class="radio-inline">
-                                <input type="radio" name="genero" id="femaleRadio" value="Female"> Mujer
+                                <input type="radio" name="genero" id="femaleRadio" value="Mujer"> Mujer
                             </label>
                         </div>
                         <div class="col-sm-3">
                             <label class="radio-inline">
-                                <input type="radio" name="genero" id="maleRadio" value="Male"> Hombre
+                                <input type="radio" name="genero" id="maleRadio" value="Hombre"> Hombre
                             </label>
                         </div>
                         <div class="col-sm-3">
                             <label class="radio-inline">
-                                <input type="radio" name="genero" id="uncknownRadio" value="Unknown" checked> Indefinido
+                                <input type="radio" name="genero" id="uncknownRadio" value="Indefinido" checked> Indefinido
                             </label>
                         </div>
                     </div>
@@ -114,12 +132,13 @@ if(isset($_SESSION['idUser']))
             <div class="form-group">
                 <label for="file" class="col-sm-12 control-label">Foto de Perfil</label>
                 <div class="col-sm-12">
-                    <input name="uploadedfile" type="file" />
+                    <input name="uploadedfile" type="file"  required />
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                <input type="submit" class="btn btn-primary btn-block" value="Registrarse">
             </div>
+            
         </form> <!-- /form -->
     </div> <!-- ./container -->
 </body>

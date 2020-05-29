@@ -2,12 +2,11 @@
 
 session_start();
 
-
 if(isset($_SESSION['idUser']))
     header("Location: panel.php");
 
-if(isset($_SESSION['message']))
-    unset($_SESSION['message']);
+if(isset($_SESSION['message']) || isset($_SESSION['messageSignup']))
+    unset($_SESSION['message'], $_SESSION['messageSignup']);
 
 if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit'])){
     require "conexion.php";
@@ -24,21 +23,21 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit']
         $row = mysqli_fetch_assoc($result);
 
         // Verifico que la contraseña ingresada sea la correcta 
-        // if(password_verify($password, $row['password'])){ (uso esa funcion si la contraseña esta encriptada en la base de datos)
-        //     $_SESSION['message'] = "Sesion iniciada";
-        //     $_SESSION['idUser'] = $row['idUsuario'];
-        //     echo"Hola";
-        //     Header("Location: panel.php");  
-        //     $_SESSION['message'] = "Email correcto y contraseña correcta";
-        // }
-
-        if($password == $row['password']){
+        if(password_verify($password, $row['password'])){ // (uso esa funcion si la contraseña esta encriptada en la base de datos)
             $_SESSION['message'] = "Sesion iniciada";
             $_SESSION['idUser'] = $row['idUsuario'];
             $_SESSION['userName'] = $row['nombre'];
-            Header("Location: panel.php"); 
-            $_SESSION['message'] = "Email correcto y contraseña correcta";
+            echo"Hola";
+            
+            Header("Location: panel.php");  
         }
+        // if($password == $row['password']){
+        //     $_SESSION['message'] = "Sesion iniciada";
+        //     $_SESSION['idUser'] = $row['idUsuario'];
+        //     $_SESSION['userName'] = $row['nombre'];
+        //     Header("Location: panel.php"); 
+            
+        // }
         else {
             $_SESSION['message'] = "Contraseña incorrecta, intente nuevamente";
         }  

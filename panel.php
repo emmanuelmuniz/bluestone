@@ -1,8 +1,9 @@
 <?php 
 session_start();
 
-if(isset($_SESSION['message']))
-    unset($_SESSION['message']);
+if(isset($_SESSION['message']) || isset($_SESSION['messageSignup']))
+    unset($_SESSION['message'], $_SESSION['messageSignup']);
+
 
 include 'conexion.php';
 

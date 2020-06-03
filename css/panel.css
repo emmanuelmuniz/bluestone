@@ -1,0 +1,94 @@
+body {
+    background: whitesmoke;
+}
+
+section{
+    background: whitesmoke;
+    padding: 45px 40px;
+}
+
+.main {
+    background: white;
+}
+
+
+section .public-y-paginacion h1 {
+    font-size: 35px;
+    color: #05386B;
+}
+
+.public-y-paginacion {
+    margin-top: 3%;
+}
+
+.public-y-paginacion h1 {
+    margin-bottom: 3%;
+}
+
+.public-y-paginacion .publicacion{
+    border: 1px solid #dbdbdb;
+    padding: 3%;
+    transition: all 300ms;
+}
+
+.public-y-paginacion .publicacion:hover{
+    background : whitesmoke;
+    cursor:pointer;
+}
+
+.public-y-paginacion a{
+    text-decoration: none;
+}
+
+.public-y-paginacion .publicacion a h4{
+    color: #05386B
+}
+
+.public-y-paginacion .publicaciones a p,
+.public-y-paginacion .publicaciones a h4{
+    margin-bottom: -10px;
+}
+
+.public-y-paginacion .publicacion a{
+    transition: all 300ms;
+}
+
+.categorias {
+    margin-top: 7%;
+    margin-left: 3%;
+}
+
+.main .categorias a,
+.main .categorias li {
+    max-width: 80%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    transition: all 300ms;
+}
+
+.main .categorias a:hover,
+.main .categorias li:hover {
+    background: #eeeeee;
+    text-decoration: none;
+}
+
+#tituloCat:hover {
+    background: #05386B;
+}
+
+.main .categorias .active:hover{
+    background: #5cdb95;;
+}
+
+.main .categorias li {
+    text-align: center;
+    background: #05386B;
+    padding: 3% 0;
+}
+
+.main .categorias .active,
+.page-item.active .page-link{
+    background: #5cdb95;
+    border-color: #5cdb95;
+    color:white;
+}

@@ -1,8 +1,9 @@
 <?php session_start(); 
 
-if(isset($_SESSION['message']) || isset($_SESSION['messageSignup']))
-    unset($_SESSION['message'], $_SESSION['messageSignup']);
+if(isset($_SESSION['messageSignup']))
+    unset($_SESSION['messageSignup']);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,18 +23,18 @@ if(isset($_SESSION['message']) || isset($_SESSION['messageSignup']))
     <header>
         <div class="container-fluid">
             <div class="row menu" >
-                <div class="logo col-12 col-md-4">
+                <div class="logo col-12 col-md-4 enlaces">
                     <a class="marca "href="index.php">BlueStone</a>
                 </div>
 
-                <div class="navegacion col-12 col-md-4">
+                <div class="navegacion col-12 col-md-4 enlaces">
                     <a href="index.php">Home</a>
                     <a href="#">Acerca de</a>
                     <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
-                <div class="buttons col-12 col-md-4">
+                <div class="buttons col-12 col-md-4 enlaces">
                     <a href="login.php">Iniciar sesión</a>
                     <a href="registro.php">Registrarse</a>                    
                 </div>
@@ -56,7 +57,7 @@ if(isset($_SESSION['message']) || isset($_SESSION['messageSignup']))
             <div class="row img-bg">
                 <div class="col-12 col-md-6">
                     <div class="textos">
-                        <h1>Conectá con los profesioanles que necesitás</h1>
+                        <h1>Conectá con los profesionales que necesitás</h1>
                         <a href="registro.php">Empezá ahora!</a>
                     </div>
                 </div>

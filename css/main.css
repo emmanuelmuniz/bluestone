@@ -77,12 +77,13 @@ header .nav-item .nav-link{
 }
 
 header .nav-item .dropdown-menu {
-    margin-left: 10em;
+    margin-left: 8.7em;
     padding: 10px 10px;
 }
 
 header .nav-item .dropdown-menu a {
     color: #05386B;
+    font-size: 15px;
     padding: 0;
     margin: 5px;
     width: 100%;

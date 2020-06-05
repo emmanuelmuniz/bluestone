@@ -29,7 +29,7 @@ if(isset($_SESSION['messageSignup']))
 
                 <div class="navegacion col-12 col-md-4 enlaces">
                     <a href="index.php">Home</a>
-                    <a href="#">Acerca de</a>
+                    <a href="publicaciones/index.php?do=borrarBusqueda">Publicaciones</a>
                     <a href="#">Contacto</a>
                 </div>        
                 
@@ -98,8 +98,8 @@ if(isset($_SESSION['messageSignup']))
                 <div class="col-12 col-md-4">
                     <div class="pasos">
                         <img class="img-fluid" src="img/iconos/conference.png" alt="">
-                        <h3>Realiza una publicación</h3>
-                        <p class="text-light">Podes publicar a que te dedicas, subiendo tu CV y agregandole una categoría para que te encuentren fácilmente</p>
+                        <h3>Publicá</h3>
+                        <p class="text-light">Mostrá a que te dedicas, subiendo tu CV y agregandole una categoría para que te encuentren fácilmente</p>
                     </div>
                 </div>
 

@@ -11,6 +11,22 @@ section{
     background: white;
 }
 
+.menu-buscador {
+    background: #05386B;
+    max-width: 100%;
+    padding: 10px;
+}
+
+.menu-buscador .form-buscador input{
+    width: 50%;
+    margin-left: 7px;
+}
+
+.menu-buscador .form-buscador button {
+    background: #5cdb95;
+    color: white;
+    border: #5cdb95;
+}
 
 section .public-y-paginacion h1 {
     font-size: 35px;
@@ -19,6 +35,17 @@ section .public-y-paginacion h1 {
 
 .public-y-paginacion {
     margin-top: 3%;
+}
+
+.public-y-paginacion .alert {
+    background:rgb(85, 129, 173);
+    width: 60%;
+    border: #ffffff;
+    color: white;
+}
+
+.public-y-paginacion .alert button:hover {
+    color: #05386B
 }
 
 .public-y-paginacion h1 {
@@ -50,12 +77,16 @@ section .public-y-paginacion h1 {
 }
 
 .public-y-paginacion .publicacion a{
+    color: #05386B;
     transition: all 300ms;
 }
 
+.public-y-paginacion .publicacion h4{
+    color: #05386B;
+}
+
 .categorias {
-    margin-top: 7%;
-    margin-left: 3%;
+    margin: 7% 0 10% 3%;
 }
 
 .main .categorias a,

@@ -36,7 +36,7 @@ if(isset($_SESSION['message']))
 
                 <div class="navegacion col-12 col-md-4">
                     <a href="index.php">Home</a>
-                    <a href="#">Acerca de</a>
+                    <a href="publicaciones/index.php?do=borrarBusqueda">Publicaciones</a>
                     <a href="#">Contacto</a>
                 </div>
 

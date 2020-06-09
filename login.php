@@ -20,13 +20,13 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit']
 
     // Verifico que exista un usuario con el email ingresado
     if (mysqli_num_rows($result) > 0){
-        $row = mysqli_fetch_assoc($result);
+        $row = mysqli_fetch_array($result);
 
         // Verifico que la contraseña ingresada sea la correcta 
         if(password_verify($password, $row['password'])){
             $_SESSION['idUser'] = $row['idUsuario'];
             $_SESSION['userName'] = $row['nombre'];
-            Header("Location: panel.php");  
+            Header("Location: publicaciones/index.php");  
         }
         else {
             $error = "Contraseña incorrecta, intente nuevamente";
@@ -60,17 +60,17 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit']
     <header>
         <div class="container-fluid">
             <div class="row menu" >
-                <div class="logo col-12 col-md-4">
+                <div class="logo col-12 col-md-4 enlaces">
                     <a href="index.php">BlueStone</a>
                 </div>
 
-                <div class="navegacion col-12 col-md-4">
+                <div class="navegacion col-12 col-md-4 enlaces">
                     <a href="index.php">Home</a>
                     <a href="publicaciones/index.php?do=borrarBusqueda">Publicaciones</a>
                     <a href="#">Contacto</a>
                 </div>
 
-                <div class="buttons col-12 col-md-4">
+                <div class="buttons col-12 col-md-4 enlaces">
                     <a href="registro.php">Registrate</a>
                 </div>
             </div>

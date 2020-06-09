@@ -40,13 +40,13 @@ if(isset($_SESSION['messageSignup']))
                 </div>
 
                 <?php else: ?>
-                <div class="menu-usuario col-12 col-md-4">
+                <div class="menu-usuario col-12 col-md-4 enlaces">
                     <div class="nav-item dropdown nav-perfil">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php echo $_SESSION['userName']?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="">Perfil</a>
+                            <a class="dropdown-item" href="publicaciones/subida.php">Crear publicación</a>
                             <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
                         </div>
                     </div>

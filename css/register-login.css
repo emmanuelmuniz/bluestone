@@ -31,9 +31,16 @@ body {
     margin-top: 20px;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea,
+.form-group select {
     width: 80%;
     margin: auto;
+}
+
+.form-group textarea {
+    min-height: 150px;
+    max-height: 250px;
 }
 
 .form-group label{
@@ -76,3 +83,8 @@ body {
     width: 100%;
     text-align: left;
 }
+
+/* Subida archivo */
+
+
+

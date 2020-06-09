@@ -52,30 +52,30 @@ include "consultasPublicaciones.php";
     <header>
         <div class="container-fluid">
             <div class="row menu" >
-                <div class="logo col-12 col-md-4">
+                <div class="logo col-12 col-md-4 enlaces">
                     <a class="marca "href="../index.php">BlueStone</a>
                 </div>
 
-                <div class="navegacion col-12 col-md-4">
+                <div class="navegacion col-12 col-md-4 enlaces">
                     <a href="../index.php">Home</a>
                     <a href="index.php?do=borrarBusqueda">Publicaciones</a>
                     <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
-                <div class="buttons col-12 col-md-4">
+                <div class="buttons col-12 col-md-4 enlaces">
                     <a href="../login.php">Iniciar sesión</a>
                     <a href="../registro.php">Registrarse</a>                    
                 </div>
 
                 <?php else: ?>
-                <div class="menu-usuario col-12 col-md-4">
+                <div class="menu-usuario col-12 col-md-4 enlaces">
                     <div class="nav-item dropdown nav-perfil">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php echo $_SESSION['userName']?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="">Perfil</a>
+                            <a class="dropdown-item" href="subida.php">Crear publicación</a>
                             <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
                         </div>
                     </div>
@@ -133,9 +133,9 @@ include "consultasPublicaciones.php";
                                 echo "<div class='publicaciones'>";
 
                                 while($publicacion = mysqli_fetch_assoc($result)): ?>
-                                    <a href="publicacion.php">
+                                    <a href="publicacion.php?idPb=<?php echo $publicacion['idPublicacion'] ?>">
                                         <div class="publicacion">
-                                            <div class="info" onclick="publicacion.php">
+                                            <div class="info">
                                                 <?php echo "<h4>".$publicacion['titulo']. "</h4><br>"; ?>
                                                 <?php echo "<p>".$publicacion['descripcion']. "...</p><br>"; ?>
                                                 <?php echo "<p>".$publicacion['categoria']. "</p><br>"; ?>
@@ -147,7 +147,7 @@ include "consultasPublicaciones.php";
                                 <?php endwhile; ?>
                                 
                                 </div>
-
+                                    
                                 <nav aria-label='Page navigation example'>
                                     <ul class="pagination">
                                         <li class="page-item <?php echo $paginaActual==0 ? ' disabled' : '' ?>"><a class="page-link" href="index.php?categoria=<?php echo ($categoria)?>&page= <?php echo ($paginaActual-1)?>">Anterior</a></li>
@@ -183,7 +183,9 @@ include "consultasPublicaciones.php";
 
                 <div class="col-sm-12 col-md-3 order-1 order-sm-12 categorias">
                     <?php
-                    $categorias = array("Sistemas", "Administración", "Marketing", "Legales", "Diseño");
+                    // A los strings con espacio le agrego %20 solamente en este array, para que al mandarlo por GET, no me genere
+                    // problemas el espacio
+                    $categorias = array("Marketing", "Industrial", "Tecnología", "Enseñanza", "Diseño", "Legales", "Recursos%20Humanos");
                     ?>
                     <ul class="list-group">
                         <li class="list-group-item text-light" id="tituloCat">Categorias</li>
@@ -194,15 +196,34 @@ include "consultasPublicaciones.php";
                             echo "<a class='list-group-item' href=index.php?categoria=todas&page=0>Todas</a>";
 
                         foreach ($categorias as $area){
-                            $query = "SELECT * FROM publicacion WHERE categoria = '$area'";
-                            $resultado = mysqli_query($conn, $query);
-
-                            if(mysqli_num_rows($resultado) > 0){
-                                if($categoria==$area){
+                            // Creo una variable con el %20 (en el caso que tenga espacios) cambiado
+                            // por un espacio para mostrarlo y compararlo con la base de datos correctamente
+                            
+                            if (strpos($area, "%20")){
+                                $categoriaConEspacio = str_replace('%20', ' ', $area);
+                                $query = "SELECT * FROM publicacion WHERE categoria = '$categoriaConEspacio'";
+                                $resultado = mysqli_query($conn, $query);
+                            }
+                            else{
+                                $query = "SELECT * FROM publicacion WHERE categoria = '$area'";
+                                $resultado = mysqli_query($conn, $query);
+                            }
+                            
+                            if(mysqli_num_rows($resultado) > 0){  
+                                if(isset($categoriaConEspacio) && $categoria==$categoriaConEspacio){
+                                    echo "<a class='list-group-item active' href=index.php?categoria=".$area."&page=0>".$categoriaConEspacio."</a>";
+                                }
+                                else if($categoria==$area){
                                     echo "<a class='list-group-item active' href=index.php?categoria=".$area."&page=0>".$area."</a>";
                                 }
-                                else
-                                    echo "<a class='list-group-item' href=index.php?categoria=".$area."&page=0>".$area."</a>";   
+                                else{
+                                    if(isset($categoriaConEspacio)){
+                                        echo "<a class='list-group-item' href=index.php?categoria=".$area."&page=0>".$categoriaConEspacio."</a>";
+                                    }
+                                    else
+                                        echo "<a class='list-group-item' href=index.php?categoria=".$area."&page=0>".$area."</a>";
+                                }
+
                             }
                         }
                         ?>

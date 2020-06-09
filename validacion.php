@@ -29,10 +29,8 @@ if(isset($_SESSION['messageSignup']))
     $genero=$_POST['genero'];
     }
     
-
-    //restricciones imagen//
-    $permitidos=array("image/jpg","image/jpeg", "img/png");
-    $limite_kb=100;
+    $permitidos=array("image/jpg","image/jpeg", "image/png"); //lo odio!//
+    $limite_kb=720000;
 
     $_SESSION['messageSignup'] = array();
 
@@ -102,7 +100,18 @@ if(isset($_SESSION['messageSignup']))
     if(in_array($_FILES['uploadedfile']['type'],$permitidos) && $_FILES['uploadedfile']['size']<=$limite_kb*1024){    //1024 porque size toma los datos en bits//
         $image = $_FILES['uploadedfile']['tmp_name'];
         $imgContenido = addslashes(file_get_contents($image));
-        $ruta= "img/perfil/".$_FILES['uploadedfile']['name'];
+        require "conexion.php";
+        $sql="SELECT * from usuario order by idUsuario desc limit 1";
+
+        $result=mysqli_query($conn,$sql);
+        $id=1;
+        if(mysqli_num_rows($result) > 0){
+            while($row = mysqli_fetch_assoc($result)){
+                $id = ($row['idUsuario']+1);
+            }}
+           
+        $ruta= "img/perfil/".$id.".png";
+        mysqli_close($conn);
         move_uploaded_file($_FILES['uploadedfile']['tmp_name'],$ruta);
     }else {
         $bandera=1;   
@@ -111,18 +120,17 @@ if(isset($_SESSION['messageSignup']))
 
     if($bandera==0){
         require "conexion.php";
-        $sql="INSERT INTO usuario (nombre, apellido, email, password,tipoUsuario, fechaNac, foto, nroTelefono, Genero) VALUES ('$nombre', '$apellido', '$email', '$pasword_cifrada','Normal', '$birth', '$imgContenido', '$telefono', '$genero')";
+        $sql="INSERT INTO usuario (nombre, apellido, email, password,tipoUsuario, fechaNac, foto, nroTelefono, Genero) VALUES ('$nombre', '$apellido', '$email', '$pasword_cifrada','Normal', '$birth', '$ruta', '$telefono', '$genero')";
         if (mysqli_query($conn, $sql)) {
             echo "New record created successfully";
       } else {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
       }
       mysqli_close($conn);
-      header('Location: registrado.html');
+      header('Location: registrado.php');
     }else{
       header('Location: registro.php');
     }
-
 ?>
 
 

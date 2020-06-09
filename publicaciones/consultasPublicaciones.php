@@ -7,6 +7,7 @@ if(isset($orden)){
         case 1:
             // Selecciono todas las publicaciones de la categoria seleccionada para calcular
             // cantidad de paginas y la paginacion
+            
             if($categoria=="todas"){
                 if(isset($_SESSION['busqueda'])){
                     $busqueda = $_SESSION['busqueda'];
@@ -47,6 +48,7 @@ if(isset($orden)){
         case 2:
             // Traigo las publicaciones corrependientes a la pagina segun el numero
             // de publicaciones por pagina que tenga
+            
             if($categoria=="todas"){
                 // Verifico si 
 
@@ -60,7 +62,7 @@ if(isset($orden)){
             else{
                 if(isset($_SESSION['busqueda'])){
                     $busqueda = $_SESSION['busqueda'];
-                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 50) AS descripcion, fechaPublicacion, categoria FROM publicacion WHERE categoria = '$categoria' AND titulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%' ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina";
+                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 50) AS descripcion, fechaPublicacion, categoria FROM publicacion WHERE (categoria = '$categoria') AND (titulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina";
                 }
                 else{
                     $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 50) AS descripcion, fechaPublicacion, categoria FROM publicacion WHERE categoria = '$categoria' ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina ";

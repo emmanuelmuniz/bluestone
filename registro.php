@@ -30,17 +30,17 @@ if(isset($_SESSION['message']))
     <header>
         <div class="container-fluid">
             <div class="row menu" >
-                <div class="logo col-12 col-md-4">
+                <div class="logo col-12 col-md-4 enlaces">
                     <a href="index.php">BlueStone</a>
                 </div>
 
-                <div class="navegacion col-12 col-md-4">
+                <div class="navegacion col-12 col-md-4 enlaces">
                     <a href="index.php">Home</a>
                     <a href="publicaciones/index.php?do=borrarBusqueda">Publicaciones</a>
                     <a href="#">Contacto</a>
                 </div>
 
-                <div class="buttons col-12 col-md-4">
+                <div class="buttons col-12 col-md-4 enlaces">
                     <a href="login.php">Iniciar sesión</a>
                 </div>
             </div>

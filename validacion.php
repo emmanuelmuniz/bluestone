@@ -108,8 +108,8 @@ if(isset($_SESSION['messageSignup']))
         if(mysqli_num_rows($result) > 0){
             while($row = mysqli_fetch_assoc($result)){
                 $id = ($row['idUsuario']+1);
-            }}
-           
+            }
+        }       
         $ruta= "img/perfil/".$id.".png";
         mysqli_close($conn);
         move_uploaded_file($_FILES['uploadedfile']['tmp_name'],$ruta);

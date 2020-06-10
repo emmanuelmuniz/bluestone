@@ -25,24 +25,24 @@ if(!isset($_SESSION['idUser']))
 <header>
         <div class="container-fluid">
             <div class="row menu" >
-                <div class="logo col-12 col-md-4">
+                <div class="logo col-12 col-lg-4">
                     <a class="marca "href="index.php">BlueStone</a>
                 </div>
 
-                <div class="navegacion col-12 col-md-4">
+                <div class="navegacion col-12 col-lg-4">
                     <a href="index.php">Home</a>
                     <a href="index.php?do=borrarBusqueda">Publicaciones</a>
                     <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
-                <div class="buttons col-12 col-md-4">
+                <div class="buttons col-12 col-lg-4">
                     <a href="login.php">Iniciar sesión</a>
                     <a href="registro.php">Registrarse</a>                    
                 </div>
 
                 <?php else: ?>
-                <div class="menu-usuario col-12 col-md-4">
+                <div class="menu-usuario col-12 col-lg-4">
                     <div class="nav-item dropdown nav-perfil">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php echo $_SESSION['userName']?>
@@ -58,7 +58,7 @@ if(!isset($_SESSION['idUser']))
         </div>
     </header>
     <div class="container">
-        <form action="validacionpublicacion.php" class="form-horizontal mx-auto" role="form" method="POST" enctype="multipart/form-data">   
+        <form action="validacionpublicacion.php" class="form-horizontal mx-auto form-subida" role="form" method="POST" enctype="multipart/form-data">   
             <div class="titulo col-sm-12">
                 <h2>Sube tu CV...</h2>
             </div>
@@ -75,7 +75,9 @@ if(!isset($_SESSION['idUser']))
                     <p><?php echo "* ".$_SESSION['messageSignup'];?></p>
                     </div>
                 <?php }
-                } ?>
+                } 
+                unset($_SESSION['messageSignup']);
+                ?>
             <div class="form-group">
                 <label for="Title" class="control-label col-sm-12">Título</label>
                 <div class="col-sm-12">

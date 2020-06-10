@@ -20,6 +20,20 @@ body {
     background-color: #fff;
 }
 
+.form-subida{
+    max-width: 700px;
+    padding: 30px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.form-subida .form-group label{
+    margin-left: 60px;
+    text-align: left;
+    font-weight: 500;
+    font-family: "Gilroy-Regular";
+}
+
 *[role="form"] h2 {
     margin: auto;
     padding: 0.3em 0;
@@ -86,5 +100,10 @@ body {
 
 /* Subida archivo */
 
-
+@media only screen and (max-width: 600px) { 
+    .form-group label{
+        margin-left: 10%;
+    }
+    
+}
 

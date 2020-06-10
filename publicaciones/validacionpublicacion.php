@@ -13,6 +13,9 @@ if( isset($_POST['title']) ) {
     if( isset($_POST['categories']) ) {
     $categoria=$_POST['categories'];
     }
+    // //Fecha de hoy//
+    // $ahora = date("Y-m-d H:i:s");
+    
     //id usuario//
     $idusuario= $_SESSION['idUser'];
     //restricciones archivo//
@@ -32,7 +35,6 @@ if( isset($_POST['title']) ) {
         }
 
     }
-
     //Descripcion//
     if(trim($descripcion)==''){
         $bandera=1;
@@ -48,7 +50,7 @@ if( isset($_POST['title']) ) {
         $result=mysqli_query($conn,$sql);
         $id=1;
         if(mysqli_num_rows($result) > 0){
-            $row = mysqli_fetch_array($publicacion);
+            $row = mysqli_fetch_array($result);
             $id = ($row['idPublicacion']+1);
         }
         $ruta= "archivos/".$id.".pdf";

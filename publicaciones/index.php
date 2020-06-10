@@ -1,10 +1,6 @@
 <?php 
 session_start();
 
-// En el caso que haya un mensaje del registro, lo borro
-if(isset($_SESSION['messageSignup']))
-    unset($_SESSION['messageSignup']);
-
 if(!isset($_GET['categoria']) || !isset($_GET['page'])){
     header("Location: index.php?categoria=todas&page=0");
 }
@@ -52,24 +48,24 @@ include "consultasPublicaciones.php";
     <header>
         <div class="container-fluid">
             <div class="row menu" >
-                <div class="logo col-12 col-md-4 enlaces">
+                <div class="logo col-12 col-lg-4 enlaces">
                     <a class="marca "href="../index.php">BlueStone</a>
                 </div>
 
-                <div class="navegacion col-12 col-md-4 enlaces">
+                <div class="navegacion col-12 col-lg-4 enlaces">
                     <a href="../index.php">Home</a>
                     <a href="index.php?do=borrarBusqueda">Publicaciones</a>
                     <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
-                <div class="buttons col-12 col-md-4 enlaces">
+                <div class="buttons col-12 col-lg-4 enlaces">
                     <a href="../login.php">Iniciar sesión</a>
                     <a href="../registro.php">Registrarse</a>                    
                 </div>
 
                 <?php else: ?>
-                <div class="menu-usuario col-12 col-md-4 enlaces">
+                <div class="menu-usuario col-12 col-lg-4 enlaces">
                     <div class="nav-item dropdown nav-perfil">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php echo $_SESSION['userName']?>
@@ -89,6 +85,14 @@ include "consultasPublicaciones.php";
     <section>
         <div class="container-fluid">
             <div class="row">
+                <?php if(isset($_SESSION['publicacionBorrada'])): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong><?php echo $_SESSION['publicacionBorrada']; ?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <?php endif; ?>
                 <div class="col-12 menu-buscador">
                     <form class="form-inline my-2 my-lg-0 form-buscador" action="index.php?categoria=<?php echo $categoria ?>&page=0    " method="POST">
                         <input class="form-control mr-sm-2" type="search" placeholder="Buscar" value="<?php echo isset($_SESSION['busqueda']) ? $_SESSION['busqueda'] : ''?>" name="busqueda" id="busqueda" aria-label="Search">

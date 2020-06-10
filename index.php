@@ -1,9 +1,4 @@
-<?php session_start(); 
-
-if(isset($_SESSION['messageSignup']))
-    unset($_SESSION['messageSignup']);
-?>
-
+<?php session_start();  ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,24 +18,24 @@ if(isset($_SESSION['messageSignup']))
     <header>
         <div class="container-fluid">
             <div class="row menu" >
-                <div class="logo col-12 col-md-4 enlaces">
+                <div class="logo col-12 col-lg-4 enlaces">
                     <a class="marca "href="index.php">BlueStone</a>
                 </div>
 
-                <div class="navegacion col-12 col-md-4 enlaces">
+                <div class="navegacion col-12 col-lg-4 enlaces">
                     <a href="index.php">Home</a>
                     <a href="publicaciones/index.php?do=borrarBusqueda">Publicaciones</a>
                     <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
-                <div class="buttons col-12 col-md-4 enlaces">
+                <div class="buttons col-12 col-lg-4 enlaces">
                     <a href="login.php">Iniciar sesión</a>
                     <a href="registro.php">Registrarse</a>                    
                 </div>
 
                 <?php else: ?>
-                <div class="menu-usuario col-12 col-md-4 enlaces">
+                <div class="menu-usuario col-12 col-lg-4 enlaces">
                     <div class="nav-item dropdown nav-perfil">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php echo $_SESSION['userName']?>

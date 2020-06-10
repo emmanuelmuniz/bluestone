@@ -5,9 +5,6 @@ session_start();
 if(isset($_SESSION['idUser']))
     header("Location: panel.php");
 
-if(isset($_SESSION['messageSignup']))
-    unset($_SESSION['messageSignup']);
-
 if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit'])){
     require "conexion.php";
 
@@ -26,6 +23,7 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit']
         if(password_verify($password, $row['password'])){
             $_SESSION['idUser'] = $row['idUsuario'];
             $_SESSION['userName'] = $row['nombre'];
+            $_SESSION['rol'] = $row['tipoUsuario'];
             Header("Location: publicaciones/index.php");  
         }
         else {

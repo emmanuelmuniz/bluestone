@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if(isset($_SESSION['idUser']) && isset($_GET['id'])){
+if(isset($_SESSION['idUser']) && isset($_GET['idPb'])){
     
-    $idPublicacion = $_GET['id'];
+    $idPublicacion = $_GET['idPb'];
 
     // Valido que exista esa publicacion
 
@@ -17,11 +17,12 @@ if(isset($_SESSION['idUser']) && isset($_GET['id'])){
             $fila = mysqli_fetch_array($result);
             $idUsuario = $fila['idUsuario'];
 
-            if(isset($_SESSION['idUser']) == $idUsuario) {
+            if($_SESSION['idUser'] == $idUsuario) {
                 $delete = "DELETE FROM publicacion WHERE idPublicacion = '$idPublicacion'";
 
                 if (mysqli_query($conn, $delete)) {
                     $_SESSION['publicacionBorrada'] = "Publicacion borrada satisfactoriamente";
+                    mysqli_close($conn);
                 } else {
                     $_SESSION['publicacionBorrada'] = "No se pudo borrar la publicación";
 

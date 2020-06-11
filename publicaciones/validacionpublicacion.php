@@ -70,7 +70,7 @@ if( isset($_POST['title']) ) {
             echo "Error: " . $sql . "<br>" . mysqli_error($conn);
       }
       mysqli_close($conn);
-      header('Location: index.php?categoria=todas&page=0&do=borrarBusqueda');
+      header('Location: editarPublicacion.php?idPb=php'.$idPublicacion);
     }else{
       header('Location: subida.php');
     }                    

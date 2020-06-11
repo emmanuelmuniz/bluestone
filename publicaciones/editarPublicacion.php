@@ -3,7 +3,49 @@ session_start();
 
 if(!isset($_SESSION['idUser']))
     header("Location: ../index.php");
+
+
+if(isset($_GET['idPb'])){
+
+    $idPublicacion = $_GET['idPb'];
+
+    // Valido que exista esa publicacion
+
+    $query = "SELECT * FROM publicacion WHERE idPublicacion = '$idPublicacion'";
+
+    include "../conexion.php";
+
+    if(mysqli_query($conn, $query)) {
+        $result = mysqli_query($conn, $query);     
+        if(mysqli_num_rows($result) > 0) {
+            $fila = mysqli_fetch_array($result);
+            $idUsuario = $fila['idUsuario'];
+
+            if($_SESSION['idUser'] != $idUsuario) {
+
+                header("Location: publicacion.php?idPb=".$idPublicacion);
+            }
+            else {
+                $titulo = $fila['titulo'];
+                $descripcion = $fila['descripcion'];
+                $categoria = $fila['categoria'];
+                $curriculum = $fila['curriculum'];
+
+                mysqli_close($conn);
+            }
+
+        }
+        else
+            header("Location: publicacion.php?idPb=".$idPublicacion);
+    }
+    else
+        header("Location: publicacion.php?idPb=".$idPublicacion);
+}
+else
+    header("Location: index.php");
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +100,7 @@ if(!isset($_SESSION['idUser']))
         </div>
     </header>
     <div class="container">
-        <form action="validacionpublicacion.php" class="form-horizontal mx-auto form-subida" role="form" method="POST" enctype="multipart/form-data">   
+        <form action="guardarModificacion.php?idPb=<?php echo $idPublicacion; ?>" class="form-horizontal mx-auto form-subida" role="form" method="POST" enctype="multipart/form-data">   
             <div class="titulo col-sm-12">
                 <h2>Sube tu CV...</h2>
             </div>
@@ -81,39 +123,49 @@ if(!isset($_SESSION['idUser']))
             <div class="form-group">
                 <label for="Title" class="control-label col-sm-12">Título *</label>
                 <div class="col-sm-12">
-                    <input type="text" name="title" id="Title" class="form-control" value="" autofocus required>
+                    <input type="text" name="title" id="Title" class="form-control" value="<?php echo $titulo; ?>" autofocus required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="Description" class="col-sm-12 control-label">Breve Descripción *</label>
                 <div class="col-sm-12">
-                <textarea class="form-control" id="Description" name="description" rows="3" value="" autofocus required></textarea>
+                <textarea class="form-control" id="Description" name="description" rows="3" value="<?php echo $descripcion; ?>" autofocus required><?php echo $descripcion; ?></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label for="selectcat" class="control-label col-sm-12">Categoría *</label>
                 <div class="col-sm-12">
                 <select class="form-control" id="selectcat" name="categories">
-                    <option hidden selected>Elige una Categoría</option>         
-                    <option value='Marketing'>Marketing</option>
-                    <option value='Enseñanza'>Enseñanza</option>
-                    <option value='Recursos Humanos'>Recursos Humanos</option>
-                    <option value='Industrial'>Industrial</option>
-                    <option value='Tecnología'>Tecnología</option>
-                    <option value='Diseño'>Diseño</option>
-                    <option value='Legales'>Legales</option>
-                    <option value='Sin categoría'>Marketing</option>
+                <?php 
+
+                $categorias = array("Marketing", "Enseñanza", "Recursos Humanos", "Industrial", "Tecnología", "Diseño", "Legales", "Sin categoría");
+
+                $flag = 0;
+
+                foreach ($categorias as &$cat) {
+                    if($cat==$categoria){
+                        echo "<option value='".$cat."' selected>".$cat."</option>";
+                        $flag = 1;
+                    }
+                    else
+                        echo "<option value='".$cat."'>".$cat."</option>";
+                }
+
+                if($flag==0)
+                    echo "<option hidden selected>Elige una Categoría</option>";
+
+                ?>
                 </select>
                 </div>
             </div>
             <div class="form-group">
-                <label for="filecv" class="col-sm-12 control-label">Cargar CV *</label>
+                <label for="filecv" class="col-sm-12 control-label">Cambiar CV</label>
                 <div class="col-sm-12">
-                    <input name="uploadedfilecv" type="file"  required />
+                    <input name="uploadedfilecv" type="file"/>
                 </div>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary btn-block" value="Subir">
+                <input type="submit" class="btn btn-primary btn-block" value="Actualizar">
             </div>
             
         </form> <!-- /form -->

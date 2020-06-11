@@ -3,7 +3,49 @@ session_start();
 
 if(!isset($_SESSION['idUser']))
     header("Location: ../index.php");
+
+
+if(isset($_GET['idPb'])){
+
+    $idPublicacion = $_GET['idPb'];
+
+    // Valido que exista esa publicacion
+
+    $query = "SELECT * FROM publicacion WHERE idPublicacion = '$idPublicacion'";
+
+    include "../conexion.php";
+
+    if(mysqli_query($conn, $query)) {
+        $result = mysqli_query($conn, $query);     
+        if(mysqli_num_rows($result) > 0) {
+            $fila = mysqli_fetch_array($result);
+            $idUsuario = $fila['idUsuario'];
+
+            if($_SESSION['idUser'] != $idUsuario) {
+
+                header("Location: publicacion.php?idPb=".$idPublicacion);
+            }
+            else {
+                $titulo = $fila['titulo'];
+                $descripcion = $fila['descripcion'];
+                $categoria = $fila['categoria'];
+                $curriculum = $fila['curriculum'];
+
+                mysqli_close($conn);
+            }
+
+        }
+        else
+            header("Location: publicacion.php?idPb=".$idPublicacion);
+    }
+    else
+        header("Location: publicacion.php?idPb=".$idPublicacion);
+}
+else
+    header("Location: index.php");
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,65 +100,7 @@ if(!isset($_SESSION['idUser']))
         </div>
     </header>
     <div class="container">
-        <form action="validacionpublicacion.php" class="form-horizontal mx-auto form-subida" role="form" method="POST" enctype="multipart/form-data">   
-            <div class="titulo col-sm-12">
-                <h2>Sube tu CV...</h2>
-            </div>
-            <?php if(isset($_SESSION['messageSignup'])){ 
-                if(is_array($_SESSION['messageSignup'])){ ?>
-                    <div class="bg-danger text-white alert">
-                    <p><?php foreach($_SESSION['messageSignup'] as $mensaje)
-                        echo "* ".$mensaje."<br>";          
-                        ?>
-                    </p>
-                </div>
-                <?php } else{ ?>
-                    <div class="bg-danger text-white alert">
-                    <p><?php echo "* ".$_SESSION['messageSignup'];?></p>
-                    </div>
-                <?php }
-                } 
-                unset($_SESSION['messageSignup']);
-                ?>
-            <div class="form-group">
-                <label for="Title" class="control-label col-sm-12">Título *</label>
-                <div class="col-sm-12">
-                    <input type="text" name="title" id="Title" class="form-control" value="" autofocus required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="Description" class="col-sm-12 control-label">Breve Descripción *</label>
-                <div class="col-sm-12">
-                <textarea class="form-control" id="Description" name="description" rows="3" value="" autofocus required></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="selectcat" class="control-label col-sm-12">Categoría *</label>
-                <div class="col-sm-12">
-                <select class="form-control" id="selectcat" name="categories">
-                    <option hidden selected>Elige una Categoría</option>         
-                    <option value='Marketing'>Marketing</option>
-                    <option value='Enseñanza'>Enseñanza</option>
-                    <option value='Recursos Humanos'>Recursos Humanos</option>
-                    <option value='Industrial'>Industrial</option>
-                    <option value='Tecnología'>Tecnología</option>
-                    <option value='Diseño'>Diseño</option>
-                    <option value='Legales'>Legales</option>
-                    <option value='Sin categoría'>Marketing</option>
-                </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="filecv" class="col-sm-12 control-label">Cargar CV *</label>
-                <div class="col-sm-12">
-                    <input name="uploadedfilecv" type="file"  required />
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary btn-block" value="Subir">
-            </div>
-            
-        </form> <!-- /form -->
+        
     </div> <!-- ./container -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

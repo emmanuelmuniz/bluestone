@@ -96,7 +96,23 @@ if(!isset($_GET['idPb'])){
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <?php endif; ?>
+                <?php 
+                unset($_SESSION['publicacionBorrada']);
+                endif; 
+                ?>
+
+                <?php if(isset($_SESSION['publicacionGuardada'])): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <?php echo $_SESSION['publicacionGuardada']; ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <?php 
+                unset($_SESSION['publicacionGuardada']);
+                endif; 
+                ?>
+
                 <div class="publicacion">
                 <?php
                 $query = "SELECT * FROM usuario WHERE idUsuario = $idUsuario";
@@ -134,9 +150,9 @@ if(!isset($_GET['idPb'])){
                         </button>
                         <div class="dropdown-menu">
                             <?php if($_SESSION['idUser'] == $idUsuario ): ?>
-                            <a class="dropdown-item" href="modificacion.php">Editar Publicación</a>
+                            <a class="dropdown-item" href="editarPublicacion.php?idPb=<?php echo $idPublicacion ?>">Editar Publicación</a>
                             <?php endif; ?>
-                            <a class="dropdown-item" id="borrarPublicacion" href="borrarPublicacion.php?id=<?php echo $idPublicacion ?>">Borrar Publicación</a>
+                            <a class="dropdown-item" id="borrarPublicacion" href="borrarPublicacion.php?idPb=<?php echo $idPublicacion ?>">Borrar Publicación</a>
                         </div>
                     </div>
                     <?php endif; 

@@ -25,7 +25,6 @@
                 <div class="navegacion col-12 col-lg-4 enlaces">
                     <a href="index.php">Home</a>
                     <a href="publicaciones/index.php?do=borrarBusqueda">Publicaciones</a>
-                    <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
@@ -42,6 +41,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="publicaciones/subida.php">Crear publicación</a>
+                            <a class="dropdown-item" href="publicaciones/misPublicaciones.php">Mis Publicaciones</a>
                             <a class="dropdown-item" href="logout.php">Cerrar sesión</a>
                         </div>
                     </div>

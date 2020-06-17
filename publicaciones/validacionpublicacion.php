@@ -18,30 +18,26 @@ if( isset($_POST['title']) ) {
     
     //id usuario//
     $idusuario= $_SESSION['idUser'];
-    //restricciones archivo//
-    $permitidos=array("application/pdf");
-    $limite_kb=100000;
-
+    
     $_SESSION['messageSignup'] = array();
     //titulo//
     if(trim($titulo)==''){
         $bandera=1;
         array_push($_SESSION['messageSignup'], "Ingrese un Titulo Correcto");
-    }else{
-        if( (ctype_alpha ( $titulo )) == true){ //validacion de solo letras//
-        }else{
-            $bandera=1;
-            array_push($_SESSION['messageSignup'], "Ingrese solo letras en el Titulo");
-        }
-
     }
+    
     //Descripcion//
     if(trim($descripcion)==''){
         $bandera=1;
         array_push($_SESSION['messageSignup'], "Ingrese una Descripción valida");
     }
+    
+    //restricciones archivo//
+    $permitidos=array("application/pdf");
+    $limite_kb=100000;
+    
     //Archivo//
-    if(in_array($_FILES['uploadedfilecv']['type'],$permitidos) && $_FILES['uploadedfilecv']['size']<=$limite_kb*1024){    //1024 porque size toma los datos en bits//
+    if(in_array($_FILES['uploadedfilecv']['type'],$permitidos) && $_FILES['uploadedfilecv']['size']<=$limite_kb*1024){ //1024 porque size toma los datos en bits//
         $archivo = $_FILES['uploadedfilecv']['tmp_name'];
         $archContenido = addslashes(file_get_contents($archivo));
         require "../conexion.php";
@@ -65,12 +61,22 @@ if( isset($_POST['title']) ) {
         require "../conexion.php";
         $sql="INSERT INTO publicacion (titulo, descripcion, categoria, curriculum,fechaPublicacion, tipoPublicacion, idUsuario) VALUES ('$titulo', '$descripcion', '$categoria', '$ruta', now(),'Normal', '$idusuario')";
         if (mysqli_query($conn, $sql)) {
-            echo "New record created successfully";
-      } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-      }
-      mysqli_close($conn);
-      header('Location: editarPublicacion.php?idPb=php'.$idPublicacion);
+            $_SESSION['publicacionCreada'] = "La publicación fue creada exitosamente";
+            unset($_SESSION['messageSignup']);
+
+            $sql="SELECT * from publicacion order by idPublicacion desc limit 1";
+            $result=mysqli_query($conn,$sql);
+            $id=1;
+            if(mysqli_num_rows($result) > 0){
+                $row = mysqli_fetch_array($result);
+                $id = ($row['idPublicacion']);
+                unset($_SESSION['messageSignup']);
+            }
+        } else {
+            
+        }
+        mysqli_close($conn);
+        header('Location: publicacion.php?Pb='.$id);
     }else{
       header('Location: subida.php');
     }                    

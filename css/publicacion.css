@@ -4,7 +4,8 @@
     width: 80%;
 }
 
-.publicacion {
+.publicacion,
+.misPublicaciones {
     margin: 2% auto;
     width: 80%;
     background: white;

@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-if(isset($_SESSION['idUser']) && isset($_GET['idPb'])){
+if(isset($_SESSION['idUser']) && isset($_GET['Pb'])){
     
-    $idPublicacion = $_GET['idPb'];
+    $idPublicacion = $_GET['Pb'];
 
     // Valido que exista esa publicacion
 
@@ -25,8 +25,7 @@ if(isset($_SESSION['idUser']) && isset($_GET['idPb'])){
                     mysqli_close($conn);
                 } else {
                     $_SESSION['publicacionBorrada'] = "No se pudo borrar la publicación";
-
-                    header("Location: publicacion.php?idPb=".$idPublicacion);
+                    header("Location: publicacion.php?Pb=".$idPublicacion);
                 }
             }
 
@@ -34,6 +33,6 @@ if(isset($_SESSION['idUser']) && isset($_GET['idPb'])){
     }
 }
 
-header("Location: index.php");
+header("Location: index.php?categoria=todas&page=0");
 
 ?>

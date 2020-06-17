@@ -5,9 +5,9 @@ if(!isset($_SESSION['idUser']))
     header("Location: ../index.php");
 
 
-if(isset($_GET['idPb'])){
+if(isset($_GET['Pb'])){
 
-    $idPublicacion = $_GET['idPb'];
+    $idPublicacion = $_GET['Pb'];
 
     // Valido que exista esa publicacion
 
@@ -23,7 +23,7 @@ if(isset($_GET['idPb'])){
 
             if($_SESSION['idUser'] != $idUsuario) {
 
-                header("Location: publicacion.php?idPb=".$idPublicacion);
+                header("Location: publicacion.php?Pb=".$idPublicacion);
             }
             else {
                 $titulo = $fila['titulo'];
@@ -36,10 +36,10 @@ if(isset($_GET['idPb'])){
 
         }
         else
-            header("Location: publicacion.php?idPb=".$idPublicacion);
+            header("Location: publicacion.php?Pb=".$idPublicacion);
     }
     else
-        header("Location: publicacion.php?idPb=".$idPublicacion);
+        header("Location: publicacion.php?Pb=".$idPublicacion);
 }
 else
     header("Location: index.php");
@@ -61,37 +61,38 @@ else
     <!--Css-->
     <link rel="stylesheet" href="../css/register-login.css?v=<?php echo time(); ?>" title="registercss">
     <link rel="stylesheet" href="../css/main.css?v=<?php echo time(); ?>">
-    <title>Document</title>
+    <script src="js/validarModificacion.js"></script>
+    <title>Editar Publicación - BlueStone</title>
 </head>
 <body>
 <header>
         <div class="container-fluid">
             <div class="row menu" >
-                <div class="logo col-12 col-lg-4">
+                <div class="logo col-12 col-lg-4 enlaces">
                     <a class="marca "href="index.php">BlueStone</a>
                 </div>
 
-                <div class="navegacion col-12 col-lg-4">
+                <div class="navegacion col-12 col-lg-4 enlaces">
                     <a href="index.php">Home</a>
                     <a href="index.php?do=borrarBusqueda">Publicaciones</a>
-                    <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
-                <div class="buttons col-12 col-lg-4">
+                <div class="buttons col-12 col-lg-4 enlaces">
                     <a href="login.php">Iniciar sesión</a>
                     <a href="registro.php">Registrarse</a>                    
                 </div>
 
                 <?php else: ?>
-                <div class="menu-usuario col-12 col-lg-4">
+                <div class="menu-usuario col-12 col-lg-4 enlaces">
                     <div class="nav-item dropdown nav-perfil">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php echo $_SESSION['userName']?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="subida.php">Crear publicación</a>
-                            <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
+                        <a class="dropdown-item" href="misPublicaciones.php">Mis Publicaciones</a>
+                        <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
                         </div>
                     </div>
                 </div>
@@ -100,9 +101,9 @@ else
         </div>
     </header>
     <div class="container">
-        <form action="guardarModificacion.php?idPb=<?php echo $idPublicacion; ?>" class="form-horizontal mx-auto form-subida" role="form" method="POST" enctype="multipart/form-data">   
+        <form action="guardarModificacion.php?Pb=<?php echo $idPublicacion; ?>" class="form-horizontal mx-auto form-subida" role="form" method="POST" enctype="multipart/form-data" onsubmit="return validar()">   
             <div class="titulo col-sm-12">
-                <h2>Sube tu CV...</h2>
+                <h2>Edición de Publicación</h2>
             </div>
             <?php if(isset($_SESSION['messageSignup'])){ 
                 if(is_array($_SESSION['messageSignup'])){ ?>
@@ -121,15 +122,15 @@ else
                 unset($_SESSION['messageSignup']);
                 ?>
             <div class="form-group">
-                <label for="Title" class="control-label col-sm-12">Título *</label>
+                <label for="title" class="control-label col-sm-12">Título *</label>
                 <div class="col-sm-12">
-                    <input type="text" name="title" id="Title" class="form-control" value="<?php echo $titulo; ?>" autofocus required>
+                    <input type="text" name="title" id="title" class="form-control" value="<?php echo $titulo; ?>" autofocus>
                 </div>
             </div>
             <div class="form-group">
-                <label for="Description" class="col-sm-12 control-label">Breve Descripción *</label>
+                <label for="description" class="col-sm-12 control-label">Breve Descripción *</label>
                 <div class="col-sm-12">
-                <textarea class="form-control" id="Description" name="description" rows="3" value="<?php echo $descripcion; ?>" autofocus required><?php echo $descripcion; ?></textarea>
+                <textarea class="form-control" id="description" name="description" rows="3" value="<?php echo $descripcion; ?>" autofocus><?php echo $descripcion; ?></textarea>
                 </div>
             </div>
             <div class="form-group">

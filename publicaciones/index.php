@@ -13,11 +13,12 @@ $paginaActual = $_GET['page'];
 
 if(isset($_POST['busqueda'])){
     $_SESSION['busqueda'] = $_POST['busqueda'];
+    header("Location: index.php?categoria=". $_GET['categoria']."&page=0");
 }
+
 
 if(isset($_SESSION['busqueda'])){
     if(isset($_GET['do']) && $_GET['do'] == 'borrarBusqueda'){
-        echo"weqwe";
         unset($_POST['busqueda']);
         unset($_SESSION['busqueda']);
         header("Location: index.php?categoria=todas&page=0");
@@ -55,7 +56,6 @@ include "consultasPublicaciones.php";
                 <div class="navegacion col-12 col-lg-4 enlaces">
                     <a href="../index.php">Home</a>
                     <a href="index.php?do=borrarBusqueda">Publicaciones</a>
-                    <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
@@ -72,6 +72,7 @@ include "consultasPublicaciones.php";
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="subida.php">Crear publicación</a>
+                            <a class="dropdown-item" href="misPublicaciones.php">Mis Publicaciones</a>
                             <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
                         </div>
                     </div>
@@ -85,14 +86,17 @@ include "consultasPublicaciones.php";
     <section>
         <div class="container-fluid">
             <div class="row">
-                <?php if(isset($_SESSION['publicacionBorrada'])): ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong><?php echo $_SESSION['publicacionBorrada']; ?></strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <?php endif; ?>
+                    <?php if(isset($_SESSION['publicacionBorrada'])): ?>
+                    <div class="alert alert-success fade show" role="alert">
+                        <?php echo $_SESSION['publicacionBorrada']; ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <?php 
+                    unset($_SESSION['publicacionBorrada']);
+                    endif; 
+                    ?>            
                 <div class="col-12 menu-buscador">
                     <form class="form-inline my-2 my-lg-0 form-buscador" action="index.php?categoria=<?php echo $categoria ?>&page=0    " method="POST">
                         <input class="form-control mr-sm-2" type="search" placeholder="Buscar" value="<?php echo isset($_SESSION['busqueda']) ? $_SESSION['busqueda'] : ''?>" name="busqueda" id="busqueda" aria-label="Search">
@@ -102,7 +106,7 @@ include "consultasPublicaciones.php";
             </div>
 
             <div class="row main">
-                <div class="col-md-7 order-2 order-sm-12">      
+                <div class="col-md-7 order-2 order-sm-12">  
                     <div class="public-y-paginacion">        
                         <?php if(isset($_SESSION['busqueda']) && $_SESSION['busqueda'] != '' ): ?>
                             <a href="index.php?categoria=todas&page=0&do=borrarBusqueda">       
@@ -131,19 +135,26 @@ include "consultasPublicaciones.php";
                             $orden=2;
                             include "consultasPublicaciones.php";       
 
-                            if (mysqli_query($conn, $query)){          
-                                $result = mysqli_query($conn, $query);
-
+                            if (mysqli_query($conn, $query)){
+                                $result = mysqli_query($conn, $query);                                       
+                                
                                 echo "<div class='publicaciones'>";
 
                                 while($publicacion = mysqli_fetch_assoc($result)): ?>
-                                    <a href="publicacion.php?idPb=<?php echo $publicacion['idPublicacion'] ?>">
+                                    <a href="publicacion.php?Pb=<?php echo $publicacion['idPublicacion'] ?>">
                                         <div class="publicacion">
                                             <div class="info">
                                                 <?php echo "<h4>".$publicacion['titulo']. "</h4><br>"; ?>
-                                                <?php echo "<p>".$publicacion['descripcion']. "...</p><br>"; ?>
-                                                <?php echo "<p>".$publicacion['categoria']. "</p><br>"; ?>
-                                                <?php echo "<p>".$publicacion['fechaPublicacion']. "</p><br>"; ?>
+                                                <?php echo "<p class='descripcion'>".$publicacion['descripcion']. "...</p><br>"; ?>
+                                                <div class="categoria-fecha">
+                                                    <?php echo "<p>".$publicacion['categoria']. "</p><br>"; ?>
+                                                    <?php
+                                                    $phpdate = strtotime( $publicacion['fechaPublicacion']);
+                                                    $mysqldate = date('d-m-Y h:i A', $phpdate);    
+                                                    ?>
+                                                    <?php echo "<p class='fecha'>Fecha de publicación: ".$mysqldate. "</p><br>"; ?>
+                                                    
+                                                </div>
                                             </div>
                                         </div>
                                     </a>
@@ -160,7 +171,7 @@ include "consultasPublicaciones.php";
 
                                             <li class="page-item 
                                             <?php echo $i == $paginaActual ? ' active' : ''?>">
-                                                <a class="page-link" href="index.php?categoria=<?php echo ($categoria)?>&page=<?php echo $i ?>"><?php echo ($i+1)?></a>
+                                                <a class="page-link numeracion" href="index.php?categoria=<?php echo ($categoria)?>&page=<?php echo $i ?>"><?php echo ($i+1)?></a>
                                             </li>
                                             
                                         <?php endfor; ?>
@@ -168,7 +179,8 @@ include "consultasPublicaciones.php";
                                         <li class="page-item <?php echo $paginaActual==$paginas-1 ? ' disabled' : '' ?>"><a class="page-link" href="index.php?categoria=<?php echo ($categoria)?>&page= <?php echo ($paginaActual+1)?>">Siguiente</a></li>
                                     </ul>
                                 </nav>
-                            <?php }
+                            <?php 
+                            }
                             else{
                                 echo "Error updating record: " . mysqli_error($conn);
                             }     
@@ -202,17 +214,21 @@ include "consultasPublicaciones.php";
                         foreach ($categorias as $area){
                             // Creo una variable con el %20 (en el caso que tenga espacios) cambiado
                             // por un espacio para mostrarlo y compararlo con la base de datos correctamente
-                            
+
                             if (strpos($area, "%20")){
                                 $categoriaConEspacio = str_replace('%20', ' ', $area);
-                                $query = "SELECT * FROM publicacion WHERE categoria = '$categoriaConEspacio'";
-                                $resultado = mysqli_query($conn, $query);
+                                $query = "SELECT * FROM publicacion WHERE categoria = '$categoriaConEspacio'";                    
+                                if(mysqli_query($conn, $query)){
+                                    $resultado = mysqli_query($conn, $query);
+                                }
                             }
                             else{
                                 $query = "SELECT * FROM publicacion WHERE categoria = '$area'";
-                                $resultado = mysqli_query($conn, $query);
+                                if(mysqli_query($conn, $query)){
+                                    $resultado = mysqli_query($conn, $query);
+                                }
                             }
-                            
+                                          
                             if(mysqli_num_rows($resultado) > 0){  
                                 if(isset($categoriaConEspacio) && $categoria==$categoriaConEspacio){
                                     echo "<a class='list-group-item active' href=index.php?categoria=".$area."&page=0>".$categoriaConEspacio."</a>";
@@ -227,7 +243,6 @@ include "consultasPublicaciones.php";
                                     else
                                         echo "<a class='list-group-item' href=index.php?categoria=".$area."&page=0>".$area."</a>";
                                 }
-
                             }
                         }
                         ?>

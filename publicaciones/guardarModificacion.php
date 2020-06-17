@@ -4,9 +4,9 @@ session_start();
 if(!isset($_SESSION['idUser']))
     header("Location: ../index.php");
 
-if(isset($_GET['idPb'])){
+if(isset($_GET['Pb'])){
 
-    $idPublicacion = $_GET['idPb'];
+    $idPublicacion = $_GET['Pb'];
 
     // Valido que exista esa publicacion
 
@@ -62,13 +62,6 @@ if( isset($_POST['title']) ) {
     if(trim($titulo)==''){
         $bandera=1;
         array_push($_SESSION['messageSignup'], "Ingrese un Titulo Correcto");
-    }else{
-        if( (ctype_alpha ( $titulo )) == true){ //validacion de solo letras//
-        }else{
-            $bandera=1;
-            array_push($_SESSION['messageSignup'], "Ingrese solo letras en el Titulo");
-        }
-
     }
     //Descripcion//
     if(trim($descripcion)==''){
@@ -88,14 +81,11 @@ if( isset($_POST['title']) ) {
         $archContenido = addslashes(file_get_contents($archivo));
 
         $ruta= "archivos/".$idPublicacion.".pdf";
-        mysqli_close($conn);
         $cvModificado = true;
         move_uploaded_file($_FILES['uploadedfilecv']['tmp_name'],$ruta);
     }else {
         // array_push($_SESSION['messageSignup'], "Error al subir el archivo.");
     }
-
-    
 
     if($bandera==0){
         require "../conexion.php";
@@ -117,16 +107,15 @@ if( isset($_POST['title']) ) {
         }
 
         if (mysqli_query($conn, $sql)) {
-            echo "Record update successfully";
             $_SESSION['publicacionGuardada'] = "La publicación fue actualizada <strong>exitosamente</strong>";
             unset($_SESSION['messageSignup']);
-            header("Location: publicacion.php?idPb=".$idPublicacion);
+            header("Location: publicacion.php?Pb=".$idPublicacion);
         } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            
         }
 
       mysqli_close($conn);
     }else{
-      header('Location: editarPublicacion.php?idPb='.$idPublicacion);
+      header('Location: editarPublicacion.php?Pb='.$idPublicacion);
     }                    
 ?>

@@ -2,12 +2,13 @@
 
 session_start();
 
-if(!isset($_GET['idPb'])){
+if(!isset($_GET['Pb'])){
     header("Location: index.php");
 } else{
     include "../conexion.php";
 
-    $idPublicacion = $_GET['idPb'];
+    $idPublicacion = $_GET['Pb'];
+    $_SESSION['idPublicacion'] = $_GET['Pb'];
 
     $query = "SELECT * FROM publicacion WHERE idPublicacion = '$idPublicacion'";
 
@@ -60,7 +61,6 @@ if(!isset($_GET['idPb'])){
                 <div class="navegacion col-12 col-lg-4 enlaces">
                     <a href="../index.php">Home</a>
                     <a href="index.php?do=borrarBusqueda">Publicaciones</a>
-                    <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
@@ -77,6 +77,7 @@ if(!isset($_GET['idPb'])){
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <a class="dropdown-item" href="subida.php">Crear publicación</a>
+                            <a class="dropdown-item" href="misPublicaciones.php">Mis Publicaciones</a>
                             <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
                         </div>
                     </div>
@@ -98,6 +99,18 @@ if(!isset($_GET['idPb'])){
                 </div>
                 <?php 
                 unset($_SESSION['publicacionBorrada']);
+                endif; 
+                ?>
+
+                <?php if(isset($_SESSION['publicacionCreada'])): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Perfecto!</strong> <?php echo $_SESSION['publicacionCreada']; ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <?php 
+                unset($_SESSION['publicacionCreada']);
                 endif; 
                 ?>
 
@@ -150,9 +163,9 @@ if(!isset($_GET['idPb'])){
                         </button>
                         <div class="dropdown-menu">
                             <?php if($_SESSION['idUser'] == $idUsuario ): ?>
-                            <a class="dropdown-item" href="editarPublicacion.php?idPb=<?php echo $idPublicacion ?>">Editar Publicación</a>
+                            <a class="dropdown-item" href="editarPublicacion.php?Pb=<?php echo $idPublicacion ?>">Editar Publicación</a>
                             <?php endif; ?>
-                            <a class="dropdown-item" id="borrarPublicacion" href="borrarPublicacion.php?idPb=<?php echo $idPublicacion ?>">Borrar Publicación</a>
+                            <a class="dropdown-item" id="borrarPublicacion" href="borrarPublicacion.php?Pb=<?php echo $idPublicacion ?>">Borrar Publicación</a>
                         </div>
                     </div>
                     <?php endif; 
@@ -178,12 +191,7 @@ if(!isset($_GET['idPb'])){
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="js/main.js"></script>
-
-<script>
-$('.dropdown-menu').popover({gpuAcceleration: !(window.devicePixelRatio < 1.5 && /Win/.test(navigator.platform))
-});
-</script>
+    <script src="js/main.js?v=<?php echo time(); ?>"></script>
 
 </body>
 </html>

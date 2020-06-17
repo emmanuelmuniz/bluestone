@@ -49,12 +49,7 @@ if(isset($_SESSION['messageSignup']))
     //Apellido//
     if(trim($apellido)==''){
         $bandera=1;
-    }else{
-        if( (ctype_alpha ( $apellido )) == true){ //validacion de solo letras//
-        }else{
-            $bandera=1;
-            array_push($_SESSION['messageSignup'], "Ingrese solo letras en el apellido");
-        }
+        array_push($_SESSION['messageSignup'], "Ingrese su apellido");
     }
     
     //Email//
@@ -122,12 +117,11 @@ if(isset($_SESSION['messageSignup']))
         require "conexion.php";
         $sql="INSERT INTO usuario (nombre, apellido, email, password,tipoUsuario, fechaNac, foto, nroTelefono, Genero) VALUES ('$nombre', '$apellido', '$email', '$pasword_cifrada','Normal', '$birth', '$ruta', '$telefono', '$genero')";
         if (mysqli_query($conn, $sql)) {
-            echo "New record created successfully";
-      } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-      }
-      mysqli_close($conn);
-      header('Location: registrado.php');
+        } else {
+        }
+        mysqli_close($conn);
+        unset($_SESSION['messageSignup']);
+        header('Location: registrado.php');
     }else{
       header('Location: registro.php');
     }

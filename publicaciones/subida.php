@@ -19,6 +19,7 @@ if(!isset($_SESSION['idUser']))
     <!--Css-->
     <link rel="stylesheet" href="../css/register-login.css?v=<?php echo time(); ?>" title="registercss">
     <link rel="stylesheet" href="../css/main.css?v=<?php echo time(); ?>">
+    <script src="js/validacionjspublicacion.js"></script>
     <title>Document</title>
 </head>
 <body>
@@ -29,27 +30,27 @@ if(!isset($_SESSION['idUser']))
                     <a class="marca "href="index.php">BlueStone</a>
                 </div>
 
-                <div class="navegacion col-12 col-lg-4">
+                <div class="navegacion col-12 col-lg-4 enlaces">
                     <a href="index.php">Home</a>
                     <a href="index.php?do=borrarBusqueda">Publicaciones</a>
-                    <a href="#">Contacto</a>
                 </div>        
                 
                 <?php if(!isset($_SESSION['idUser'])):?>
-                <div class="buttons col-12 col-lg-4">
+                <div class="buttons col-12 col-lg-4 enlaces">
                     <a href="login.php">Iniciar sesión</a>
                     <a href="registro.php">Registrarse</a>                    
                 </div>
 
                 <?php else: ?>
-                <div class="menu-usuario col-12 col-lg-4">
+                <div class="menu-usuario col-12 col-lg-4 enlaces">
                     <div class="nav-item dropdown nav-perfil">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?php echo $_SESSION['userName']?>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="subida.php">Crear publicación</a>
-                            <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
+                        <a class="dropdown-item" href="misPublicaciones.php">Mis Publicaciones</a>
+                        <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
                         </div>
                     </div>
                 </div>
@@ -58,7 +59,7 @@ if(!isset($_SESSION['idUser']))
         </div>
     </header>
     <div class="container">
-        <form action="validacionpublicacion.php" class="form-horizontal mx-auto form-subida" role="form" method="POST" enctype="multipart/form-data">   
+        <form action="validacionpublicacion.php" onsubmit="return validar();" class="form-horizontal mx-auto form-subida" role="form" method="POST" enctype="multipart/form-data">   
             <div class="titulo col-sm-12">
                 <h2>Sube tu CV...</h2>
             </div>
@@ -79,15 +80,15 @@ if(!isset($_SESSION['idUser']))
                 unset($_SESSION['messageSignup']);
                 ?>
             <div class="form-group">
-                <label for="Title" class="control-label col-sm-12">Título *</label>
+                <label for="title" class="control-label col-sm-12">Título *</label>
                 <div class="col-sm-12">
-                    <input type="text" name="title" id="Title" class="form-control" value="" autofocus required>
+                    <input type="text" id="title" name="title" class="form-control" value="" autofocus >
                 </div>
             </div>
             <div class="form-group">
-                <label for="Description" class="col-sm-12 control-label">Breve Descripción *</label>
+                <label for="description" class="col-sm-12 control-label">Breve Descripción *</label>
                 <div class="col-sm-12">
-                <textarea class="form-control" id="Description" name="description" rows="3" value="" autofocus required></textarea>
+                <textarea class="form-control" id="description" name="description" rows="3" value="" autofocus ></textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -103,13 +104,14 @@ if(!isset($_SESSION['idUser']))
                     <option value='Diseño'>Diseño</option>
                     <option value='Legales'>Legales</option>
                     <option value='Sin categoría'>Marketing</option>
+                    <option value='Sin categoría'>Sin Cateogoría</option>
                 </select>
                 </div>
             </div>
             <div class="form-group">
-                <label for="filecv" class="col-sm-12 control-label">Cargar CV *</label>
+                <label for="uploadedfilecv" class="col-sm-12 control-label">Cargar CV *</label>
                 <div class="col-sm-12">
-                    <input name="uploadedfilecv" type="file"  required />
+                    <input name="uploadedfilecv" id="uploadedfilecv" type="file"/>
                 </div>
             </div>
             <div class="form-group">

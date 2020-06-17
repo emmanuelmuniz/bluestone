@@ -3,7 +3,7 @@
 session_start();
 
 if(isset($_SESSION['idUser']))
-    header("Location: panel.php");
+    header("Location: index.php");
 
 if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit'])){
     require "conexion.php";
@@ -24,11 +24,12 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit']
             $_SESSION['idUser'] = $row['idUsuario'];
             $_SESSION['userName'] = $row['nombre'];
             $_SESSION['rol'] = $row['tipoUsuario'];
-            Header("Location: publicaciones/index.php");  
+            Header("Location: publicaciones/index.php");
         }
         else {
             $error = "Contraseña incorrecta, intente nuevamente";
         }  
+        mysqli_close($conn);
     }
     else {
         $error = "Email incorrecto, intente nuevamente";
@@ -65,7 +66,6 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['submit']
                 <div class="navegacion col-12 col-md-4 enlaces">
                     <a href="index.php">Home</a>
                     <a href="publicaciones/index.php?do=borrarBusqueda">Publicaciones</a>
-                    <a href="#">Contacto</a>
                 </div>
 
                 <div class="buttons col-12 col-md-4 enlaces">

@@ -14,15 +14,16 @@ if(isset($orden)){
                     $query = "SELECT * FROM publicacion WHERE titulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%'";
                 }
                 else
-                    $query = "SELECT * FROM publicacion";                
+                    $query = "SELECT * FROM publicacion"; 
             }
             else{
                 if(isset($_SESSION['busqueda'])){
                     $busqueda = $_SESSION['busqueda'];
-                    $query = "SELECT * FROM publicacion WHERE categoria = '$categoria' AND titulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%'";
+                    $query = "SELECT * FROM publicacion WHERE (categoria = '$categoria') AND (titulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%')";
                 }
-                else
+                else{
                     $query = "SELECT * FROM publicacion WHERE categoria = '$categoria'";
+                }
             }
 
             if (mysqli_query($conn, $query)) {
@@ -30,13 +31,13 @@ if(isset($orden)){
                 
                 if(mysqli_num_rows($publicaciones) > 0){
                     $cantPublicaciones = mysqli_num_rows($publicaciones);
-                    $publicacionesPorPagina = 2;
+                    $publicacionesPorPagina = 3;
                     
                     $paginas = $cantPublicaciones/$publicacionesPorPagina;
                     $paginas = ceil($paginas);
                 }
             } else {
-            echo "Error updating record: " . mysqli_error($conn);
+
             }
 
             if(mysqli_num_rows($publicaciones) > 0){
@@ -54,18 +55,18 @@ if(isset($orden)){
 
                 if(isset($_SESSION['busqueda'])){
                     $busqueda = $_SESSION['busqueda'];
-                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 50) AS descripcion, fechaPublicacion, categoria FROM publicacion WHERE titulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%' ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina";
+                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 70) AS descripcion, fechaPublicacion, categoria FROM publicacion WHERE titulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%' ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina";
                 }
                 else
-                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 50) AS descripcion, fechaPublicacion, categoria FROM publicacion ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina";
+                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 70) AS descripcion, fechaPublicacion, categoria FROM publicacion ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina";
             }
             else{
                 if(isset($_SESSION['busqueda'])){
                     $busqueda = $_SESSION['busqueda'];
-                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 50) AS descripcion, fechaPublicacion, categoria FROM publicacion WHERE (categoria = '$categoria') AND (titulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina";
+                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 70) AS descripcion, fechaPublicacion, categoria FROM publicacion WHERE (categoria = '$categoria') AND (titulo LIKE '%$busqueda%' OR descripcion LIKE '%$busqueda%') ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina";
                 }
                 else{
-                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 50) AS descripcion, fechaPublicacion, categoria FROM publicacion WHERE categoria = '$categoria' ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina ";
+                    $query = "SELECT idPublicacion, titulo, SUBSTRING(descripcion, 1, 70) AS descripcion, fechaPublicacion, categoria FROM publicacion WHERE categoria = '$categoria' ORDER BY fechaPublicacion DESC LIMIT $desde, $publicacionesPorPagina ";
                 }
             }
             break;

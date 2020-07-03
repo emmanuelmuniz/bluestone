@@ -15,83 +15,58 @@
 
 /* Header menú */
 
-header .menu {
+.navbar{
+    font-family: 'Gilroy-Regular';
+    padding: 1.2rem;
     background: #05386B;
-    text-align: center;
-    padding: 30px 0px 20px;
 }
 
-header .menu a {
-    padding: 30px;
-    font-family: 'Gilroy-Bold', Arial, sans-serif;
-    font-size: 17px;
+.navbar a {
+    text-decoration: none;
     color: white;
-    margin: 3px;
-    transition: all 300ms;
-    text-decoration:none;
-}
-
-header .menu .logo {
-    margin-top: -10px;
-}
-
-header .menu .logo a{
     font-family: "Gilroy-Bold";
-    font-size: 30px;
-    text-decoration: none;
-    margin-bottom: 10px;
+    transition: all 300ms;
 }
 
-header .navegacion a {
-    padding: 15px;
-    text-decoration: none;
+.navbar .dropdown-menu a{
+    color: #05386B;
 }
 
-header .navegacion a:hover,
-header .menu .logo a:hover {
+.marca {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.navbar .acciones li a,
+.linksMedio a{
+    font-size: 1.1rem;
+}
+
+.navbar .acciones li .accion,
+.linksMedio a {
+    margin: 7px;
+}
+
+.marca:hover,
+.linksMedio a:hover{
     color: #5cdb95;
 }
 
-header .buttons a {
-    background: #5cdb95;
-    padding: 15px 25px;
+.nav-user {
+    font-size: 1.1rem;
 }
 
-header .buttons a {
-    background: #5cdb95;
-    padding: 15px 25px;
+.nav-user:active {
     text-decoration: none;
+    border: none;
 }
 
-header .buttons a:hover {
+.navbar .acciones li .accion{
+    background: #5cdb95;
+}
+
+.navbar .acciones li .accion:hover {
     background: #379683;
-}
-
-header .nav-item a:hover{
-    text-decoration: underline;
-}
-
-header .nav-item .nav-link{
-    padding: 0 10px;
-    margin: 0;
-}
-
-header .nav-item .dropdown-menu {
-    margin-left: 8.7em;
-    padding: 10px 10px;
-}
-
-header .nav-item .dropdown-menu a {
-    color: #05386B;
-    font-size: 15px;
-    padding: 0;
-    margin: 5px;
-    width: 100%;
-}
-
-header .nav-item .dropdown-menu a:hover {
-    text-decoration: underline;
-    background: none;
 }
 
 /* Header Portada */
@@ -213,27 +188,29 @@ header .img-bg a:hover {
     background: #8ee4af;
 }
 
-@media only screen and (max-width: 820px) {
+@media only screen and (max-width: 1000px) {
     header .menu .enlaces{
         margin-bottom: 30px;
+    }
+
+    .navbar .acciones li .accion,
+    .linksMedio a {
+        margin: 0px;
+    }
+
+    .navbar .acciones li .accion{
+        background: none;
+    }
+
+    .navbar .acciones li .accion:hover {
+        background: none;
+        color: #379683;
     }
 }
 
 @media only screen and (max-width: 600px) {
     *{
         margin: 0;
-    }
-    header .menu .enlaces{
-        margin-bottom: 30px;
-    }
-    
-    header .buttons a {
-        padding: 10px;
-    }
-
-    header .navegacion a {
-        padding: 5px;
-        text-decoration: none;
     }
 
     header .img-bg {
@@ -264,7 +241,7 @@ header .img-bg a:hover {
         font-size: 10px;
         text-align: center;
     }
-  }
+}
 
 @media only screen and (max-width: 410px) {
     header .img-bg h1 {

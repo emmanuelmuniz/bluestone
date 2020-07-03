@@ -47,39 +47,48 @@ include "consultasPublicaciones.php";
 <body>
     <!-- Menú -->
     <header>
-        <div class="container-fluid">
-            <div class="row menu" >
-                <div class="logo col-12 col-lg-4 enlaces">
-                    <a class="marca "href="../index.php">BlueStone</a>
-                </div>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="marca "href="../index.php">BlueStone</a>
 
-                <div class="navegacion col-12 col-lg-4 enlaces">
-                    <a href="../index.php">Home</a>
-                    <a href="index.php?do=borrarBusqueda">Publicaciones</a>
-                </div>        
-                
-                <?php if(!isset($_SESSION['idUser'])):?>
-                <div class="buttons col-12 col-lg-4 enlaces">
-                    <a href="../login.php">Iniciar sesión</a>
-                    <a href="../registro.php">Registrarse</a>                    
-                </div>
+                <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                <?php else: ?>
-                <div class="menu-usuario col-12 col-lg-4 enlaces">
-                    <div class="nav-item dropdown nav-perfil">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $_SESSION['userName']?>
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="subida.php">Crear publicación</a>
-                            <a class="dropdown-item" href="misPublicaciones.php">Mis Publicaciones</a>
-                            <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
-                        </div>
-                    </div>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto linksMedio">
+                        <li class="nav-item linkMedio">
+                            <a class="nav-link" href="../index.php">Home</a>
+                        </li>
+                        <li class="nav-item linkMedio">
+                            <a class="nav-link" href="index.php">Publicaciones</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto acciones">
+                        <?php if(!isset($_SESSION['idUser'])):?>
+                            <li class="nav-item">
+                                <a class="nav-link accion" href="../login.php">Iniciar sesión</a>   
+                            </li>     
+                            <li class="nav-item">
+                                <a class="nav-link accion" href="../registro.php">Registrarse</a>   
+                            </li>              
+                        <?php else: ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-user dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <?php echo $_SESSION['userName']?>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="subida.php">Crear publicación</a>
+                                <a class="dropdown-item" href="misPublicaciones.php">Mis Publicaciones</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
+                            </div>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
                 </div>
-                <?php endif; ?>
             </div>
-        </div>
+        </nav>
     </header>
 
     <!-- Publicaciones -->

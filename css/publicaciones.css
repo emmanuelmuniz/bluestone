@@ -144,7 +144,11 @@ section .public-y-paginacion h1 {
     color:white;
 }
 
-@media only screen and (max-width: 410px) {
+@media only screen and (max-width: 600px) {
+    .menu-buscador .form-buscador input {
+        margin-right: 10px;
+    }
+
     .page-item .numeracion{
         display: none;
     }

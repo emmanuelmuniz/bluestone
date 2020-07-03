@@ -1,0 +1,31 @@
+.dataTables_wrapper .dataTables_filter input {
+    background: white;
+    border: 1px solid #05386b3f;
+    border-radius: 3px;
+}
+
+select {
+    border: 1px solid #05386b3f;
+    border-radius: 4px;
+    padding: 3px;
+}
+
+thead {
+    background-color: #05386be0;
+    color: white;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    box-shadow: none !important;
+    background-color: white !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    color: white !important;
+    background: #5cdb95 !important;
+    border: #5cdb95;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: white !important;
+    border: #5cdb95 !important;
+}

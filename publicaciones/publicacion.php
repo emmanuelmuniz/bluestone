@@ -165,7 +165,7 @@ if(!isset($_GET['Pb'])){
                     <?php 
                     if(isset($_SESSION['idUser'])):
                     if($_SESSION['idUser'] == $idUsuario  || $_SESSION['rol'] == 'admin'): ?>
-                    <div class="btn-group acciones">
+                    <div class="btn-group actions">
                         <button type="button" class="btn btn-success btn-acciones">Acciones</button>
                         <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="sr-only">Toggle Dropdown</span>
@@ -174,7 +174,7 @@ if(!isset($_GET['Pb'])){
                             <?php if($_SESSION['idUser'] == $idUsuario ): ?>
                             <a class="dropdown-item" href="editarPublicacion.php?Pb=<?php echo $idPublicacion ?>">Editar Publicación</a>
                             <?php endif; ?>
-                            <a class="dropdown-item" id="borrarPublicacion" href="borrarPublicacion.php?Pb=<?php echo $idPublicacion ?>">Borrar Publicación</a>
+                            <a class="dropdown-item" class="borrarPublicacion" href="borrarPublicacion.php?Pb=<?php echo $idPublicacion ?>">Borrar Publicación</a>
                         </div>
                     </div>
                     <?php endif; 

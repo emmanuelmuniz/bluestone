@@ -24,7 +24,7 @@ if(!isset($_SESSION['idUser'])){
     
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
     <link rel="stylesheet" href="css/estilos.css?v=<?php echo time(); ?>">
-
+    <script src="https://use.fontawesome.com/05b16f44a4.js"></script>
     <title>BlueStone</title>
 </head>
 <body>
@@ -82,9 +82,11 @@ if(!isset($_SESSION['idUser'])){
             <table class="table table-bordered table table-hovered" id="tablaUsuarios">
                 <thead>
                     <tr>
+                        <th scope="col" id="usuario" class="id">Id</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
                         <th scope="col">Correo</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
             </table>
@@ -95,8 +97,9 @@ if(!isset($_SESSION['idUser'])){
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+    <!-- <script type="text/javascript" src="js/jquery.dataTables.min.js?v="></script> -->
     <script type="text/javascript" src="js/main.js?v=<?php echo time(); ?>"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

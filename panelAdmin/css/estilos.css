@@ -29,3 +29,39 @@ thead {
     color: white !important;
     border: #5cdb95 !important;
 }
+
+td a {
+    text-align: center;
+}
+
+a .fa-trash {
+    padding: 10px;
+    background: rgb(230, 65, 65);
+    width: 80%;
+    color: white;
+    margin: auto;
+    border-radius: 7px;
+}
+
+@media only screen and (max-width: 600px) { 
+    .nombre {
+        display: none;
+    }
+
+    .apellido {
+        display: none;
+    }
+
+    .correo {
+        width: 30% !important;
+    }
+
+    table {
+        width: 30px !important;
+    }
+
+    a .fa-trash {
+        padding: 15px;
+        width: 100%;
+    }
+}

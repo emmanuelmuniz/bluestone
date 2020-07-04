@@ -1,8 +1,13 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['idUser']))
-    header("Location: ../index.php");
+if(!isset($_SESSION['idUser'])){
+    header("Location: ../publicaciones/");
+} else if(!$_SESSION['rol'] == 'admin'){
+    header("Location: ../publicaciones/");
+}
+
+
 
 ?>
 
@@ -82,39 +87,29 @@ if(!isset($_SESSION['idUser']))
 
                         $idUser = $_SESSION['idUser'];
 
-                        $query = "SELECT * FROM publicacion WHERE idUsuario = '$idUser' ORDER BY fechaPublicacion DESC";
+                        $query = "SELECT * FROM usuario ORDER BY nombre ASC";
 
                         if(mysqli_query($conn, $query)){
                             $result = mysqli_query($conn, $query);
-                                
-                            
+                                              
                             if(mysqli_num_rows($result) > 0){ ?>
                                 <table class="table table-bordered table-responsive-lg">
                                     <thead>
                                         <tr>
-                                            <th>Título</th>
-                                            <th class="none">Categoría</th>
-                                            <th class="none">Fecha de publicación</th>
+                                            <th class="none">Nombre</th>
+                                            <th class="none">Apellido</th>
+                                            <th>Correo</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                             <?php 
                             $i = 0;
-                            while($publicacion = mysqli_fetch_assoc($result)): ?>                                                         
-                                    
-                                    <?php if(($i%2)==0){ ?>
-                                        <tr class="publicacion verde">
-                                    <?php } else {?>
+                            while($usuario = mysqli_fetch_assoc($result)): ?>                                                         
                                         <tr class="publicacion">
-                                    <?php } ?>
-                                            <td><a href="publicacion.php?Pb=<?php echo $publicacion['idPublicacion']?>"><?php echo $publicacion['titulo']; ?></a></td>
-                                            <td class="none"><?php echo $publicacion['categoria']; ?></td>
-                                            <td class="none"><?php 
-                                            $phpdate = strtotime( $publicacion['fechaPublicacion']);
-                                            $mysqldate = date( 'd-m-Y', $phpdate );
-                                            echo $mysqldate;
-                                            ?></td>
+                                            <td class="none"><?php echo $usuario['nombre']; ?></td>
+                                            <td class="none"><?php echo $usuario['apellido']; ?></td>
+                                            <td><?php echo $usuario['email']?></td>
                                             <td class="acciones">
                                                 <div class="iconos">
                                                     <a data-toggle="tooltip" title="Editar publicación" href="editarPublicacion.php?Pb=<?php echo $publicacion['idPublicacion']?>">
@@ -129,7 +124,6 @@ if(!isset($_SESSION['idUser']))
                                                 </div>
                                             </td>
                                         </tr>
-                                <?php $i++;?>
                             <?php endwhile; ?>
                                     </table>
                                 </tbody>

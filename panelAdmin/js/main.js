@@ -29,19 +29,62 @@ $(document).ready(function(){
         }
     }
 
-    $("#tablaUsuarios").DataTable({
+    crearDatatable();
+    
+    function crearDatatable(){
+        $(table).DataTable().destroy();
+        var table = $("#tablaUsuarios").DataTable({
             "ajax": {
                 "method": "POST",
                 "url": "usuarios.php"
             },
             "columns": [
+                {"data": "idUsuario"},
                 {"data": "nombre"},
                 {"data": "apellido"},
-                {"data": "email"}
+                {"data": "email"},
+                {"defaultContent": "<a type='button'class='eliminar'><i class='fa fa-trash' aria-hidden='true'></i></a>"}
+            ],
+            "columnDefs": [
+                {
+                    "targets": 0,
+                    "visible": false
+                },
+                {
+                    "targets": 1,
+                    className : "nombre"
+                },
+                {
+                    "targets": 2,
+                    className : "apellido"
+                },
+                {
+                    "targets": 3,
+                    className : "correo"
+                },
+                {
+                    "targets": 4,
+                    className : "borrar"
+                }
             ],
             "language": lenguaje_espanol
-    });
+        });
 
-   
+        getData("#tablaUsuarios tbody", table);
+    }
+
+    function getData(tbody, table){
+        $(tbody).on("click", "a.eliminar", function(){
+            var data = table.row($(this).parents("tr")).data();
+            
+            console.log(data.idUsuario);
+
+            var respuesta = confirm("¿Desea eliminar este usuario?");
+
+            if(respuesta==true){           
+                window.location.href = "../index.php";
+            }
+        }); 
+    }   
 });
 

@@ -14,7 +14,8 @@ if(isset($_SESSION['idUser'])){
             $usuarios = mysqli_query($conn, $query);
             
             while($usuario = mysqli_fetch_assoc($usuarios)){
-                $arregloUsuauarios["data"][] = $usuario;
+                if($usuario['idUsuario'] != $_SESSION['idUser'])
+                    $arregloUsuauarios["data"][] = $usuario;
             }
             echo json_encode($arregloUsuauarios);
             mysqli_close($conn);

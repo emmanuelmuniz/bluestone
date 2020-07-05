@@ -56,7 +56,12 @@ if(!isset($_SESSION['idUser']))
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="subida.php">Crear publicación</a>
-                                <a class="dropdown-item" href="misPublicaciones.php">Mis Publicaciones</a>
+                                <a class="dropdown-item" href="misPublicaciones.php">Mis publicaciones</a>
+                                <?php
+                                    if($_SESSION['rol'] == "admin"){
+                                        echo "<a class='dropdown-item' href='../panelAdmin/index.php'>Ver usuarios</a>";
+                                    }
+                                ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
                             </div>

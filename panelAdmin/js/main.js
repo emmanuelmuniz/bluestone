@@ -2,11 +2,11 @@ $(document).ready(function(){
 
     var lenguaje_espanol = {
         "sProcessing":     "Procesando...",
-        "sLengthMenu":     "Mostrar _MENU_ registros",
+        "sLengthMenu":     "Mostrar _MENU_ usuarios",
         "sZeroRecords":    "No se encontraron resultados",
         "sEmptyTable":     "Ningún dato disponible en esta tabla",
-        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "sInfo":           "Mostrando usuarios del _START_ al _END_ de un total de _TOTAL_ usuarios",
+        "sInfoEmpty":      "Mostrando usuarios del 0 al 0 de un total de 0 usuarios",
         "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
         "sInfoPostFix":    "",
         "sSearch":         "Buscar:",
@@ -76,14 +76,25 @@ $(document).ready(function(){
     function getData(tbody, table){
         $(tbody).on("click", "a.eliminar", function(){
             var data = table.row($(this).parents("tr")).data();
-            
-            console.log(data.idUsuario);
-
-            var respuesta = confirm("¿Desea eliminar este usuario?");
-
-            if(respuesta==true){           
-                window.location.href = "../index.php";
-            }
+        
+            swal({
+                title: "Está seguro?",
+                text: "Una vez eliminado el usuario, no podrá volver atrás!",
+                icon: "warning",
+                closeOnEsc: true,
+                buttons: {
+                    cancel: "Cancelar",
+                    borrar: {
+                        text: "Si, estoy seguro",
+                        value: "borrar",  
+                    },
+                }
+                })
+                .then((valor) => {
+                    if(valor == "borrar"){
+                        window.location.href = "borrarUsuario.php?id="+data.idUsuario;
+                    }
+                });
         }); 
     }   
 });

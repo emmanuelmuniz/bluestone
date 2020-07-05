@@ -62,7 +62,12 @@ if(!isset($_SESSION['idUser'])){
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="../publicaciones/subida.php">Crear publicación</a>
-                                <a class="dropdown-item" href="../publicaciones/misPublicaciones.php">Mis Publicaciones</a>
+                                <a class="dropdown-item" href="../publicaciones/misPublicaciones.php">Mis publicaciones</a>
+                                <?php
+                                    if($_SESSION['rol'] == "admin"){
+                                        echo "<a class='dropdown-item' href='index.php'>Ver usuarios</a>";
+                                    }
+                                ?>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="../logout.php">Cerrar sesión</a>
                             </div>
@@ -76,7 +81,30 @@ if(!isset($_SESSION['idUser'])){
 
     <!-- Usuarios -->
     
+    <h3 class="usuariosTitulo">Usuarios registrados</h3>
+
     <div class="container p-4">
+        <?php
+        if(isset($_SESSION['usuarioBorrado'])){
+            if($_SESSION['usuarioBorrado'] == true){
+                echo "<div class='alert alert-success' role='alert'>
+                    Usuario borrado satisfactoriamente
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                        <span aria-hidden='true'>&times;</span>
+                    </button>
+                    </div>";
+            }
+            else{
+                echo "<div class='alert alert-danger' role='alert'>
+                No se pudo borrar el usuario
+                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                </button>
+                </div>";
+            }
+            unset($_SESSION['usuarioBorrado']);
+        }
+        ?>
         <div class="row">
             <div class="col-md-12 col-md-offset-2">
             <table class="table table-bordered table table-hovered" id="tablaUsuarios">
@@ -95,13 +123,19 @@ if(!isset($_SESSION['idUser'])){
     </div>
     
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
+    <!-- Datatable -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
     <!-- <script type="text/javascript" src="js/jquery.dataTables.min.js?v="></script> -->
+
+    <!-- Sweet Alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="js/main.js?v=<?php echo time(); ?>"></script>
     
+    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </body>

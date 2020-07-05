@@ -27,7 +27,7 @@ if(!isset($_SESSION['idUser'])){
     <link rel="stylesheet" href="../css/publicacion.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../css/misPublicaciones.css?v=<?php echo time(); ?>">
     
-    <title>Mis publicaciones</title>
+    <title>Usuarios Registrados</title>
 </head>
 <body>
     <header>
@@ -79,7 +79,7 @@ if(!isset($_SESSION['idUser'])){
         <div class="row">
             <div class="col-md-12">
                 <div class="tituloMisPublicaciones">
-                    <h2>Mis Publicaciones</h2>
+                    <h2>Usuarios registrados</h2>
                 </div>
                 <div class="misPublicaciones">
                     <?php 

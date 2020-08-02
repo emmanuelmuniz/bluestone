@@ -17,7 +17,7 @@ if(isset($_SESSION['idUser']) && isset($_GET['Pb'])){
             $fila = mysqli_fetch_array($result);
             $idUsuario = $fila['idUsuario'];
 
-            if($_SESSION['idUser'] == $idUsuario) {
+            if($_SESSION['idUser'] == $idUsuario || $_SESSION['rol'] == "admin") {
                 $delete = "DELETE FROM publicacion WHERE idPublicacion = '$idPublicacion'";
 
                 if (mysqli_query($conn, $delete)) {

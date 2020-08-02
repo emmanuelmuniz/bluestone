@@ -110,8 +110,6 @@ if( isset($_POST['title']) ) {
             $_SESSION['publicacionGuardada'] = "La publicación fue actualizada <strong>exitosamente</strong>";
             unset($_SESSION['messageSignup']);
             header("Location: publicacion.php?Pb=".$idPublicacion);
-        } else {
-            
         }
 
       mysqli_close($conn);

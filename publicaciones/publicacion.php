@@ -10,6 +10,8 @@ if(!isset($_GET['Pb'])){
     $idPublicacion = $_GET['Pb'];
     $_SESSION['idPublicacion'] = $_GET['Pb'];
 
+    setcookie('UltimoVisitado', $idPublicacion, time()+(3600*24*7));
+
     $query = "SELECT * FROM publicacion WHERE idPublicacion = '$idPublicacion'";
 
     if (mysqli_query($conn, $query)) {
@@ -179,7 +181,7 @@ if(!isset($_GET['Pb'])){
                             <?php if($_SESSION['idUser'] == $idUsuario ): ?>
                             <a class="dropdown-item" href="editarPublicacion.php?Pb=<?php echo $idPublicacion ?>">Editar Publicación</a>
                             <?php endif; ?>
-                            <a class="dropdown-item" class="borrarPublicacion" href="borrarPublicacion.php?Pb=<?php echo $idPublicacion ?>">Borrar Publicación</a>
+                            <a class="dropdown-item borrarPublicacion" href="borrarPublicacion.php?Pb=<?php echo $idPublicacion ?>">Borrar Publicación</a>
                         </div>
                     </div>
                     <?php endif; 

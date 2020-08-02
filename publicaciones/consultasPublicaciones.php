@@ -36,12 +36,10 @@ if(isset($orden)){
                     $paginas = $cantPublicaciones/$publicacionesPorPagina;
                     $paginas = ceil($paginas);
                 }
-            } else {
-
             }
 
             if(mysqli_num_rows($publicaciones) > 0){
-                if($paginaActual > $paginas)
+                if(($paginaActual+1) > $paginas)
                     header("Location: index.php?categoria=".$categoria."&page=".($paginas-1));
             }
             break;

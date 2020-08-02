@@ -13,7 +13,7 @@ function validar(){
 
     expresionemail= /\w+@\w+\.+[a-z]/; 
     expresiontext = /^[ñÑÁÉÍÓÚA-Za-záéíóú _]*[ñÑÁÉÍÓÚA-Za-záéíóú][ñÑÁÉÍÓÚA-Za-záéíóú _]*$/;
-    expresioncontrasenia = /^[a-z0-9_-]{6,18}$/;
+    expresioncontrasenia = /^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/;
 
     if(nombre === "" || apellido === "" || email === "" || contrasenia === "" || confcontrasenia === "" || cumpleaños === "" || telefono === ""|| opcion === "" || fotoperfil === ""){
         alert("Todos los Campos deben Estar completos");

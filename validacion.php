@@ -29,7 +29,7 @@ if(isset($_SESSION['messageSignup']))
     $genero=$_POST['genero'];
     }
     
-    $permitidos=array("image/jpg","image/jpeg", "image/png"); //lo odio!//
+    $permitidos=array("image/jpg","image/jpeg", "image/png");
     $limite_kb=720000;
 
     $_SESSION['messageSignup'] = array();

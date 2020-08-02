@@ -188,6 +188,10 @@ header .img-bg a:hover {
     background: #8ee4af;
 }
 
+.row {
+    margin-right: 0px;
+}
+
 @media only screen and (max-width: 1000px) {
     header .menu .enlaces{
         margin-bottom: 30px;

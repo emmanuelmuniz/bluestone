@@ -123,6 +123,9 @@ include "consultasPublicaciones.php";
                 <div class="col-md-7 order-2 order-sm-12">  
                     <div class="public-y-paginacion">        
                         <?php if(isset($_SESSION['busqueda']) && $_SESSION['busqueda'] != '' ): ?>
+
+                            <!-- Borrar filtros de busqueda -->
+                        
                             <a href="index.php?categoria=todas&page=0&do=borrarBusqueda">       
                                 <div class="alert alert-info alert-dismissible fade show" role="alert">
                                     Quitar filtro de búsqueda y categoría
@@ -132,7 +135,12 @@ include "consultasPublicaciones.php";
                                 </div> 
                             </a>
                         <?php endif; ?>       
-                        
+                                                    
+                        <?php if(isset($_COOKIE['UltimoVisitado'])): ?>
+                            <button type="button" class="btn btn-primary mb-3">
+                                <a class="text-light" href="publicacion.php?Pb=<?php echo $_COOKIE['UltimoVisitado']?>">Ultimo visitado</a>
+                            </button>
+                        <?php endif;?>
 
                         <h1>Publicaciones de candidatos</h1>  
                         <?php     
@@ -140,9 +148,9 @@ include "consultasPublicaciones.php";
                         if (isset($cantPublicaciones) && mysqli_num_rows($publicaciones) > 0){
 
                             $desde = $paginaActual*$publicacionesPorPagina;
-                            $desde = (string)$desde;
+                            // $desde = (string)$desde;
 
-                            $publicacionesPorPagina = (string)$publicacionesPorPagina;
+                            // $publicacionesPorPagina = (string)$publicacionesPorPagina;
 
                             // Traigo las publicaciones corrependientes a la pagina segun el numero
                             // de publicaciones por pagina que tenga
@@ -177,6 +185,7 @@ include "consultasPublicaciones.php";
                                 
                                 </div>
                                     
+                                <!-- Botones de paginacion -->
                                 <nav aria-label='Page navigation example'>
                                     <ul class="pagination">
                                         <li class="page-item <?php echo $paginaActual==0 ? ' disabled' : '' ?>"><a class="page-link" href="index.php?categoria=<?php echo ($categoria)?>&page= <?php echo ($paginaActual-1)?>">Anterior</a></li>

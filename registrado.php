@@ -23,8 +23,7 @@ if(isset($_SESSION['idUser']))
 </head>
 <body>
     <header>
-        <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="marca "href="index.php">BlueStone</a>
 
